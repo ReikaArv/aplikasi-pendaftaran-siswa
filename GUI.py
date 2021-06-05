@@ -9,6 +9,7 @@
 
 import wx
 import wx.xrc
+import wx.grid
 
 ###########################################################################
 ## Class LoginFrame
@@ -125,12 +126,6 @@ class MainFrameAdmin ( wx.Frame ):
 		self.ShowSiswaData = wx.Button( self, wx.ID_ANY, u"Tampilkan Data Siswa", wx.DefaultPosition, wx.Size( 200,50 ), 0 )
 		fgSizer3.Add( self.ShowSiswaData, 0, wx.ALL, 5 )
 
-		self.m_button9 = wx.Button( self, wx.ID_ANY, u"Tambah Data Siswa", wx.DefaultPosition, wx.Size( 200,50 ), 0 )
-		fgSizer3.Add( self.m_button9, 0, wx.ALL, 5 )
-
-		self.m_button10 = wx.Button( self, wx.ID_ANY, u"gatau button apa", wx.DefaultPosition, wx.Size( 200,50 ), 0 )
-		fgSizer3.Add( self.m_button10, 0, wx.ALL, 5 )
-
 		self.m_button11 = wx.Button( self, wx.ID_ANY, u"Logout", wx.DefaultPosition, wx.Size( 200,50 ), 0 )
 		fgSizer3.Add( self.m_button11, 0, wx.ALL, 5 )
 
@@ -141,14 +136,14 @@ class MainFrameAdmin ( wx.Frame ):
 		self.Centre( wx.BOTH )
 
 		# Connect Events
-		self.m_button11.Bind( wx.EVT_BUTTON, self.goLogout )
+		self.m_button11.Bind( wx.EVT_BUTTON, self.goLogOut )
 
 	def __del__( self ):
 		pass
 
 
 	# Virtual event handlers, overide them in your derived class
-	def goLogout( self, event ):
+	def goLogOut( self, event ):
 		event.Skip()
 
 
@@ -219,6 +214,60 @@ class MainFrameUser ( wx.Frame ):
 
 
 		self.SetSizer( fgSizer2 )
+		self.Layout()
+
+		self.Centre( wx.BOTH )
+
+	def __del__( self ):
+		pass
+
+
+###########################################################################
+## Class ShowData
+###########################################################################
+
+class ShowData ( wx.Frame ):
+
+	def __init__( self, parent ):
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 814,300 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
+
+		bSizer4 = wx.BoxSizer( wx.VERTICAL )
+
+		bSizer5 = wx.BoxSizer( wx.VERTICAL )
+
+		self.grid = wx.grid.Grid( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
+
+		# Grid
+		self.grid.CreateGrid( 5, 21 )
+		self.grid.EnableEditing( True )
+		self.grid.EnableGridLines( True )
+		self.grid.EnableDragGridSize( False )
+		self.grid.SetMargins( 0, 0 )
+
+		# Columns
+		self.grid.EnableDragColMove( False )
+		self.grid.EnableDragColSize( True )
+		self.grid.SetColLabelSize( 30 )
+		self.grid.SetColLabelAlignment( wx.ALIGN_CENTER, wx.ALIGN_CENTER )
+
+		# Rows
+		self.grid.EnableDragRowSize( True )
+		self.grid.SetRowLabelSize( 80 )
+		self.grid.SetRowLabelAlignment( wx.ALIGN_CENTER, wx.ALIGN_CENTER )
+
+		# Label Appearance
+
+		# Cell Defaults
+		self.grid.SetDefaultCellAlignment( wx.ALIGN_LEFT, wx.ALIGN_TOP )
+		bSizer5.Add( self.grid, 0, wx.ALL, 5 )
+
+
+		bSizer4.Add( bSizer5, 1, wx.EXPAND, 5 )
+
+
+		self.SetSizer( bSizer4 )
 		self.Layout()
 
 		self.Centre( wx.BOTH )
