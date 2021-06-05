@@ -325,7 +325,7 @@ class ShowData ( wx.Frame ):
 		# Connect Events
 		self.ButtonTambahData.Bind( wx.EVT_BUTTON, self.TambahData )
 		self.m_button6.Bind( wx.EVT_BUTTON, self.EditData )
-		self.m_button5.Bind( wx.EVT_BUTTON, self.hapus )
+		self.m_button5.Bind( wx.EVT_BUTTON, self.HapusData )
 		self.m_button43.Bind( wx.EVT_BUTTON, self.Cancel )
 
 	def __del__( self ):
@@ -339,7 +339,7 @@ class ShowData ( wx.Frame ):
 	def EditData( self, event ):
 		event.Skip()
 
-	def hapus( self, event ):
+	def HapusData( self, event ):
 		event.Skip()
 
 	def Cancel( self, event ):
@@ -1166,6 +1166,98 @@ class EditPassword ( wx.Frame ):
 
 	# Virtual event handlers, overide them in your derived class
 	def Submit( self, event ):
+		event.Skip()
+
+
+###########################################################################
+## Class DeleteData
+###########################################################################
+
+class DeleteData ( wx.Frame ):
+
+	def __init__( self, parent ):
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 835,300 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
+
+		bSizer32 = wx.BoxSizer( wx.VERTICAL )
+
+		bSizer33 = wx.BoxSizer( wx.VERTICAL )
+
+		self.grid = wx.grid.Grid( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
+
+		# Grid
+		self.grid.CreateGrid( 5, 21 )
+		self.grid.EnableEditing( True )
+		self.grid.EnableGridLines( True )
+		self.grid.EnableDragGridSize( False )
+		self.grid.SetMargins( 0, 0 )
+
+		# Columns
+		self.grid.EnableDragColMove( False )
+		self.grid.EnableDragColSize( True )
+		self.grid.SetColLabelSize( 30 )
+		self.grid.SetColLabelAlignment( wx.ALIGN_CENTER, wx.ALIGN_CENTER )
+
+		# Rows
+		self.grid.EnableDragRowSize( True )
+		self.grid.SetRowLabelSize( 80 )
+		self.grid.SetRowLabelAlignment( wx.ALIGN_CENTER, wx.ALIGN_CENTER )
+
+		# Label Appearance
+
+		# Cell Defaults
+		self.grid.SetDefaultCellAlignment( wx.ALIGN_LEFT, wx.ALIGN_TOP )
+		bSizer33.Add( self.grid, 0, wx.ALL, 5 )
+
+		self.m_staticText180 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText180.Wrap( -1 )
+
+		bSizer33.Add( self.m_staticText180, 0, wx.ALL, 5 )
+
+
+		bSizer32.Add( bSizer33, 1, wx.EXPAND, 5 )
+
+		fgSizer20 = wx.FlexGridSizer( 0, 2, 0, 0 )
+		fgSizer20.SetFlexibleDirection( wx.BOTH )
+		fgSizer20.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
+
+		self.m_staticText178 = wx.StaticText( self, wx.ID_ANY, u"ID User", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText178.Wrap( -1 )
+
+		fgSizer20.Add( self.m_staticText178, 0, wx.ALL, 5 )
+
+		self.BoxHapus = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		fgSizer20.Add( self.BoxHapus, 0, wx.ALL, 5 )
+
+		self.m_button45 = wx.Button( self, wx.ID_ANY, u"Hapus", wx.DefaultPosition, wx.DefaultSize, 0 )
+		fgSizer20.Add( self.m_button45, 0, wx.ALL, 5 )
+
+		self.m_button46 = wx.Button( self, wx.ID_ANY, u"Cancel", wx.DefaultPosition, wx.DefaultSize, 0 )
+		fgSizer20.Add( self.m_button46, 0, wx.ALL, 5 )
+
+
+		bSizer32.Add( fgSizer20, 1, wx.EXPAND, 5 )
+
+
+		self.SetSizer( bSizer32 )
+		self.Layout()
+
+		self.Centre( wx.BOTH )
+
+		# Connect Events
+		self.m_button45.Bind( wx.EVT_BUTTON, self.HapusData )
+		self.m_button46.Bind( wx.EVT_BUTTON, self.Cancel )
+
+	def __del__( self ):
+		pass
+
+
+	# Virtual event handlers, overide them in your derived class
+	def HapusData( self, event ):
+		event.Skip()
+
+	def Cancel( self, event ):
 		event.Skip()
 
 
