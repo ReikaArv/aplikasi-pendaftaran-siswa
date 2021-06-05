@@ -72,8 +72,8 @@ class ShowDataFrame(GUI.ShowData):
         for i in range(len(labels)):
             self.grid.SetColLabelValue(i, labels[i])
 
-        logins = cursor.execute('SELECT * from User')
-        for row in logins:
+        Data = cursor.execute('SELECT * from User')
+        for row in Data:
             row_num = row[0]
             cells = row[0:]
             for i in range(0,len(cells)):
@@ -87,6 +87,14 @@ class ShowDataFrame(GUI.ShowData):
     
     def EditData(self, event):
         FrameEditData.Show()
+        FrameShowData.Hide()
+    
+    def HapusData(self, event):
+        FrameHapusData.Show()
+        FrameShowData.Hide()
+
+    def Cancel(self, event):
+        FrameMainAdmin.Show()
         FrameShowData.Hide()
 
 class AddDataFrame(GUI.TambahData):
@@ -147,6 +155,36 @@ class EditDataFrame(GUI.EditData):
         FrameShowData.Show()
         FrameEditData.Hide()
 
+class DeleteDataFrame(GUI.DeleteData):
+    def __init__(self, parent):
+        super().__init__(parent)
+        cursor = conn.cursor()
+
+        metadata = cursor.execute('SELECT * from User')
+        labels = []
+        for i in metadata.description:
+            labels.append(i[0])
+        labels = labels[0:]
+        for i in range(len(labels)):
+            self.grid.SetColLabelValue(i, labels[i])
+
+        Data = cursor.execute('SELECT * from User')
+        for row in Data:
+            row_num = row[0]
+            cells = row[0:]
+            for i in range(0,len(cells)):
+                if cells[i] != None and cells[i] != "null":
+                    self.grid.SetCellValue(row_num-1, i, str(cells[i]))
+        conn.commit()
+
+    def HapusData(self, event):
+        Hapus = self.BoxHapus.GetValue()
+
+    def Cancel(self, event):
+        FrameShowData.Show()
+        FrameHapusData.Hide()
+
+
     
 
 #daftar Frame
@@ -156,6 +194,7 @@ FrameMainUser = MainFrameUser(None)
 FrameShowData = ShowDataFrame(None)
 FrameAddData= AddDataFrame(None)
 FrameEditData = EditDataFrame(None) 
+FrameHapusData = DeleteDataFrame(None)
 FrameLogin.Show()
 app.MainLoop()
     
