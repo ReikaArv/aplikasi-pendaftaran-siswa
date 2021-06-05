@@ -10,6 +10,7 @@
 import wx
 import wx.xrc
 import wx.grid
+import wx.adv
 
 ###########################################################################
 ## Class LoginFrame
@@ -45,26 +46,6 @@ class LoginFrame ( wx.Frame ):
 
 		fgSizer1.Add( self.m_staticText1, 0, wx.ALL, 5 )
 
-		self.m_staticText28 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText28.Wrap( -1 )
-
-		fgSizer1.Add( self.m_staticText28, 0, wx.ALL, 5 )
-
-		self.m_staticText281 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText281.Wrap( -1 )
-
-		fgSizer1.Add( self.m_staticText281, 0, wx.ALL, 5 )
-
-		self.m_staticText282 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText282.Wrap( -1 )
-
-		fgSizer1.Add( self.m_staticText282, 0, wx.ALL, 5 )
-
-		self.m_staticText283 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText283.Wrap( -1 )
-
-		fgSizer1.Add( self.m_staticText283, 0, wx.ALL, 5 )
-
 
 		fgSizer1.Add( ( 0, 0), 1, wx.EXPAND, 5 )
 
@@ -89,10 +70,10 @@ class LoginFrame ( wx.Frame ):
 
 		gSizer3 = wx.GridSizer( 0, 2, 0, 0 )
 
-		self.loginBtn = wx.Button( self, wx.ID_ANY, u"Login", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.loginBtn = wx.Button( self, wx.ID_ANY, u"Login", wx.DefaultPosition, wx.Size( -1,30 ), 0 )
 		gSizer3.Add( self.loginBtn, 0, wx.ALL, 5 )
 
-		self.regBtn = wx.Button( self, wx.ID_ANY, u"Register", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.regBtn = wx.Button( self, wx.ID_ANY, u"Register", wx.DefaultPosition, wx.Size( -1,30 ), 0 )
 		gSizer3.Add( self.regBtn, 0, wx.ALL, 5 )
 
 
@@ -401,7 +382,7 @@ class EditData ( wx.Frame ):
 
 		fgSizer61.Add( self.m_staticText411, 0, wx.ALL, 5 )
 
-		self.BoxTanggalLahirEdit = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 125,-1 ), 0 )
+		self.BoxTanggalLahirEdit = wx.adv.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.Size( 125,-1 ), wx.adv.DP_DEFAULT )
 		fgSizer61.Add( self.BoxTanggalLahirEdit, 0, wx.ALL, 5 )
 
 		self.m_staticText421 = wx.StaticText( self, wx.ID_ANY, u"Gender", wx.DefaultPosition, wx.DefaultSize, 0 )
@@ -409,9 +390,9 @@ class EditData ( wx.Frame ):
 
 		fgSizer61.Add( self.m_staticText421, 0, wx.ALL, 5 )
 
-		GenderEditChoices = [ u"Pilih salah satu", u"Laki Laki", u"Perempuan" ]
-		self.GenderEdit = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, GenderEditChoices, 0 )
-		self.GenderEdit.SetSelection( 0 )
+		GenderEditChoices = [ u"Laki Laki", u"Perempuan" ]
+		self.GenderEdit = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 125,-1 ), GenderEditChoices, 0 )
+		self.GenderEdit.SetSelection( 1 )
 		fgSizer61.Add( self.GenderEdit, 0, wx.ALL, 5 )
 
 		self.m_staticText431 = wx.StaticText( self, wx.ID_ANY, u"Tinggi Badan", wx.DefaultPosition, wx.DefaultSize, 0 )
@@ -467,7 +448,7 @@ class EditData ( wx.Frame ):
 
 		fgSizer61.Add( self.m_staticText481, 0, wx.ALL, 5 )
 
-		AsalSekolahEditChoices = [ u"Pilih salah satu" ]
+		AsalSekolahEditChoices = [ u"SMPN 1 Pekoland", u"SMP 5 Curahtatal", u"SMPK 14 Axioma", u"SMP 2 Jember", u"SMPN 3 Bondowoso", u"MTS Al-Ahlan" ]
 		self.AsalSekolahEdit = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, AsalSekolahEditChoices, 0 )
 		self.AsalSekolahEdit.SetSelection( 0 )
 		fgSizer61.Add( self.AsalSekolahEdit, 0, wx.ALL, 5 )
@@ -484,8 +465,8 @@ class EditData ( wx.Frame ):
 
 		fgSizer71.Add( self.m_staticText491, 0, wx.ALL, 5 )
 
-		JurusanEditChoices = [ u"Pilih Salah Satu", u"IPA", u"IPS", u"BAHASA" ]
-		self.JurusanEdit = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, JurusanEditChoices, 0 )
+		JurusanEditChoices = [ u"IPA", u"IPS", u"BAHASA" ]
+		self.JurusanEdit = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 125,-1 ), JurusanEditChoices, 0 )
 		self.JurusanEdit.SetSelection( 0 )
 		fgSizer71.Add( self.JurusanEdit, 0, wx.ALL, 5 )
 
@@ -518,9 +499,9 @@ class EditData ( wx.Frame ):
 
 		fgSizer71.Add( self.m_staticText521, 0, wx.ALL, 5 )
 
-		PekerjaanAyahEditChoices = [ u"Pilih Salah Satu", u"PNS", u"Petani", u"Wirausaha", u"Wiraswasta", wx.EmptyString, wx.EmptyString ]
-		self.PekerjaanAyahEdit = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, PekerjaanAyahEditChoices, 0 )
-		self.PekerjaanAyahEdit.SetSelection( 0 )
+		PekerjaanAyahEditChoices = [ u"PNS", u"Petani", u"Wirausaha", u"Wiraswasta", u"Nelayan", u"Polisi", u"Tidak Bekerja", wx.EmptyString ]
+		self.PekerjaanAyahEdit = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 125,-1 ), PekerjaanAyahEditChoices, 0 )
+		self.PekerjaanAyahEdit.SetSelection( 4 )
 		fgSizer71.Add( self.PekerjaanAyahEdit, 0, wx.ALL, 5 )
 
 		self.m_staticText531 = wx.StaticText( self, wx.ID_ANY, u"Pekerjaan Ibu", wx.DefaultPosition, wx.DefaultSize, 0 )
@@ -528,8 +509,8 @@ class EditData ( wx.Frame ):
 
 		fgSizer71.Add( self.m_staticText531, 0, wx.ALL, 5 )
 
-		PekerjaanIbuEditChoices = [ u"Pilih Salah Satu", u"PNS", u"Petani", u"Wirausaha", u"Wiraswasta", wx.EmptyString, wx.EmptyString ]
-		self.PekerjaanIbuEdit = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, PekerjaanIbuEditChoices, 0 )
+		PekerjaanIbuEditChoices = [ u"PNS", u"Petani", u"Wirausaha", u"Wiraswasta", u"Nelayan", u"Polisi", u"Tidak Bekerja", wx.EmptyString ]
+		self.PekerjaanIbuEdit = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 125,-1 ), PekerjaanIbuEditChoices, 0 )
 		self.PekerjaanIbuEdit.SetSelection( 0 )
 		fgSizer71.Add( self.PekerjaanIbuEdit, 0, wx.ALL, 5 )
 
@@ -538,9 +519,9 @@ class EditData ( wx.Frame ):
 
 		fgSizer71.Add( self.m_staticText541, 0, wx.ALL, 5 )
 
-		StatusEditChoices = [ u"Pilih Salah Satu", u"Diterima ", u"Tidak Diterima", u"Menunnggu Konfirmasi" ]
+		StatusEditChoices = [ u"Diterima ", u"Tidak Diterima", u"Menunnggu Konfirmasi" ]
 		self.StatusEdit = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, StatusEditChoices, 0 )
-		self.StatusEdit.SetSelection( 0 )
+		self.StatusEdit.SetSelection( 2 )
 		fgSizer71.Add( self.StatusEdit, 0, wx.ALL, 5 )
 
 
@@ -571,6 +552,7 @@ class EditData ( wx.Frame ):
 		self.Centre( wx.BOTH )
 
 		# Connect Events
+		self.Bind( wx.EVT_ACTIVATE, self.goEdit )
 		self.m_button42.Bind( wx.EVT_BUTTON, self.Submit )
 		self.m_button43.Bind( wx.EVT_BUTTON, self.Cancel )
 
@@ -579,6 +561,9 @@ class EditData ( wx.Frame ):
 
 
 	# Virtual event handlers, overide them in your derived class
+	def goEdit( self, event ):
+		event.Skip()
+
 	def Submit( self, event ):
 		event.Skip()
 
@@ -830,7 +815,7 @@ class TambahData ( wx.Frame ):
 
 		fgSizer61.Add( self.m_staticText411, 0, wx.ALL, 5 )
 
-		self.BoxTanggalLahir = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 125,-1 ), 0 )
+		self.BoxTanggalLahir = wx.adv.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.Size( 125,-1 ), wx.adv.DP_DEFAULT )
 		fgSizer61.Add( self.BoxTanggalLahir, 0, wx.ALL, 5 )
 
 		self.m_staticText421 = wx.StaticText( self, wx.ID_ANY, u"Gender", wx.DefaultPosition, wx.DefaultSize, 0 )
@@ -838,8 +823,8 @@ class TambahData ( wx.Frame ):
 
 		fgSizer61.Add( self.m_staticText421, 0, wx.ALL, 5 )
 
-		GenderChoices = [ u"Pilih salah satu", u"Laki Laki", u"Perempuan" ]
-		self.Gender = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, GenderChoices, 0 )
+		GenderChoices = [ u"Laki Laki", u"Perempuan" ]
+		self.Gender = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 125,-1 ), GenderChoices, 0 )
 		self.Gender.SetSelection( 0 )
 		fgSizer61.Add( self.Gender, 0, wx.ALL, 5 )
 
@@ -896,7 +881,7 @@ class TambahData ( wx.Frame ):
 
 		fgSizer61.Add( self.m_staticText481, 0, wx.ALL, 5 )
 
-		AsalSekolahChoices = [ u"Pilih salah satu" ]
+		AsalSekolahChoices = [ u"SMPN 1 Pekoland", u"SMP 5 Curahtatal", u"SMPK 14 Axioma", u"SMP 2 Jember", u"SMPN 3 Bondowoso", u"MTS Al-Ahlan" ]
 		self.AsalSekolah = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, AsalSekolahChoices, 0 )
 		self.AsalSekolah.SetSelection( 0 )
 		fgSizer61.Add( self.AsalSekolah, 0, wx.ALL, 5 )
@@ -913,8 +898,8 @@ class TambahData ( wx.Frame ):
 
 		fgSizer71.Add( self.m_staticText491, 0, wx.ALL, 5 )
 
-		JurusanChoices = [ u"Pilih Salah Satu", u"IPA", u"IPS", u"BAHASA" ]
-		self.Jurusan = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, JurusanChoices, 0 )
+		JurusanChoices = [ u"IPA", u"IPS", u"BAHASA" ]
+		self.Jurusan = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 125,-1 ), JurusanChoices, 0 )
 		self.Jurusan.SetSelection( 0 )
 		fgSizer71.Add( self.Jurusan, 0, wx.ALL, 5 )
 
@@ -947,7 +932,7 @@ class TambahData ( wx.Frame ):
 
 		fgSizer71.Add( self.m_staticText521, 0, wx.ALL, 5 )
 
-		PekerjaanAyahChoices = [ u"Pilih Salah Satu", u"PNS", u"Petani", u"Wirausaha", u"Wiraswasta", wx.EmptyString, wx.EmptyString ]
+		PekerjaanAyahChoices = [ u"PNS", u"Petani", u"Wirausaha", u"Wiraswasta", u"Nelayan", u"Polisi", u"Tidak Bekerja", wx.EmptyString ]
 		self.PekerjaanAyah = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, PekerjaanAyahChoices, 0 )
 		self.PekerjaanAyah.SetSelection( 0 )
 		fgSizer71.Add( self.PekerjaanAyah, 0, wx.ALL, 5 )
@@ -957,7 +942,7 @@ class TambahData ( wx.Frame ):
 
 		fgSizer71.Add( self.m_staticText531, 0, wx.ALL, 5 )
 
-		PekerjaanIbuChoices = [ u"Pilih Salah Satu", u"PNS", u"Petani", u"Wirausaha", u"Wiraswasta", wx.EmptyString, wx.EmptyString ]
+		PekerjaanIbuChoices = [ u"PNS", u"Petani", u"Wirausaha", u"Wiraswasta", u"Nelayan", u"Polisi", u"Tidak Bekerja", wx.EmptyString ]
 		self.PekerjaanIbu = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, PekerjaanIbuChoices, 0 )
 		self.PekerjaanIbu.SetSelection( 0 )
 		fgSizer71.Add( self.PekerjaanIbu, 0, wx.ALL, 5 )
@@ -967,9 +952,9 @@ class TambahData ( wx.Frame ):
 
 		fgSizer71.Add( self.m_staticText541, 0, wx.ALL, 5 )
 
-		StatusChoices = [ u"Pilih Salah Satu", u"Diterima ", u"Tidak Diterima", u"Menunnggu Konfirmasi" ]
+		StatusChoices = [ u"Diterima ", u"Tidak Diterima", u"Menunnggu Konfirmasi" ]
 		self.Status = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, StatusChoices, 0 )
-		self.Status.SetSelection( 0 )
+		self.Status.SetSelection( 2 )
 		fgSizer71.Add( self.Status, 0, wx.ALL, 5 )
 
 
