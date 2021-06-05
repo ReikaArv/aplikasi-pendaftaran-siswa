@@ -1,5 +1,5 @@
-from sqlite3.dbapi2 import connect
 import wx
+from wx.core import Choice
 import GUI
 import sqlite3
 
@@ -49,6 +49,7 @@ class MainFrameAdmin(GUI.MainFrameAdmin):
     def ShowSiswaData(self, event):
         FrameShowData.Show()
         FrameMainAdmin.Hide()
+    
     def goLogOut(self, event):
         FrameLogin.Show()
         FrameMainAdmin.Hide()
@@ -62,31 +63,99 @@ class ShowDataFrame(GUI.ShowData):
     def __init__(self, parent):
         super().__init__(parent)
         cursor = conn.cursor()
-        self.grid.ClearGrid()
 
         metadata = cursor.execute('SELECT * from User')
         labels = []
         for i in metadata.description:
             labels.append(i[0])
-        labels = labels[1:]
+        labels = labels[0:]
         for i in range(len(labels)):
             self.grid.SetColLabelValue(i, labels[i])
 
         logins = cursor.execute('SELECT * from User')
         for row in logins:
             row_num = row[0]
-            cells = row[1:]
+            cells = row[0:]
             for i in range(0,len(cells)):
                 if cells[i] != None and cells[i] != "null":
                     self.grid.SetCellValue(row_num-1, i, str(cells[i]))
-        self.Show()
         conn.commit()
+
+    def TambahData(self,event):
+        FrameAddData.Show()
+        FrameShowData.Hide()
+    
+    def EditData(self, event):
+        FrameEditData.Show()
+        FrameShowData.Hide()
+
+class AddDataFrame(GUI.TambahData):
+    def __init__(self, parent):
+        super().__init__(parent)
+    
+    def Submit(self, event):
+       Username = self.BoxUsername.GetValue()
+       Password = self.BoxPassword.GetValue()
+       Nama = self.BoxNama.GetValue()
+       TanggalLahir= self.BoxTanggalLahir.GetValue()
+       JenisKelamin = self.Gender.GetStringSelection()
+       TinggiBadan = self.BoxTinggiBadan.GetValue()
+       BeratBadan = self.BoxBeratBadan.GetValue()
+       NIK = self.BoxNIK.GetValue()
+       NoHP = self.BoxNomorHp.GetValue()
+       Alamat = self.BoxAlamat.GetValue()
+       NilaiUN = self.BoxNilaiUN.GetValue()
+       AsalSekolah = self.AsalSekolah.GetStringSelection()
+       Jurusan = self.Jurusan.GetStringSelection()
+       NamaAyah = self.BoxNamaAyah.GetValue()
+       NamaIbu= self.BoxNamaIbu.GetValue()
+       JumlahSaudara = self.BoxJumlahSaudara.GetValue()
+       PekerjaanAyah = self.PekerjaanAyah.GetStringSelection()
+       PekerjaanIbu = self.PekerjaanIbu.GetStringSelection()
+       Status = self.Status.GetStringSelection()
+
+    def Cancel(self, event):
+        FrameShowData.Show()
+        FrameAddData.Hide()
+    
+class EditDataFrame(GUI.EditData):
+    def __init__(self, parent):
+        super().__init__(parent)
+    
+    def Submit(self, event):
+       Username = self.BoxUsernameEdit.GetValue()
+       Password = self.BoxPasswordEdit.GetValue()
+       Nama = self.BoxNamaEdit.GetValue()
+       TanggalLahir= self.BoxTanggalLahirEdit.GetValue()
+       JenisKelamin = self.GenderEdit.GetStringSelection()
+       TinggiBadan = self.BoxTinggiBadanEdit.GetValue()
+       BeratBadan = self.BoxBeratBadanEdit.GetValue()
+       NIK = self.BoxNIKEdit.GetValue()
+       NoHP = self.BoxNomorHpEdit.GetValue()
+       Alamat = self.BoxAlamatEdit.GetValue()
+       NilaiUN = self.BoxNilaiUNEdit.GetValue()
+       AsalSekolah = self.AsalSekolahEdit.GetStringSelection()
+       Jurusan = self.JurusanEdit.GetStringSelection()
+       NamaAyah = self.BoxNamaAyahEdit.GetValue()
+       NamaIbu= self.BoxNamaIbuEdit.GetValue()
+       JumlahSaudara = self.BoxJumlahSaudaraEdit.GetValue()
+       PekerjaanAyah = self.PekerjaanAyahEdit.GetStringSelection()
+       PekerjaanIbu = self.PekerjaanIbuEdit.GetStringSelection()
+       Status = self.StatusEdit.GetStringSelection()
+
+    def Cancel(self, event):
+        FrameShowData.Show()
+        FrameEditData.Hide()
+
+    
 
 #daftar Frame
 FrameLogin = LoginFrame(None)
 FrameMainAdmin = MainFrameAdmin(None)
 FrameMainUser = MainFrameUser(None)
 FrameShowData = ShowDataFrame(None)
-FrameShowData.Show()
+FrameAddData= AddDataFrame(None)
+FrameEditData = EditDataFrame(None) 
+FrameLogin.Show()
 app.MainLoop()
     
