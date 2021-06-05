@@ -290,7 +290,7 @@ class ShowData ( wx.Frame ):
 
 		# Grid
 		self.grid.CreateGrid( 5, 21 )
-		self.grid.EnableEditing( True )
+		self.grid.EnableEditing( False )
 		self.grid.EnableGridLines( True )
 		self.grid.EnableDragGridSize( False )
 		self.grid.SetMargins( 0, 0 )
@@ -1188,7 +1188,7 @@ class DeleteData ( wx.Frame ):
 
 		# Grid
 		self.grid.CreateGrid( 5, 21 )
-		self.grid.EnableEditing( True )
+		self.grid.EnableEditing( False )
 		self.grid.EnableGridLines( True )
 		self.grid.EnableDragGridSize( False )
 		self.grid.SetMargins( 0, 0 )
