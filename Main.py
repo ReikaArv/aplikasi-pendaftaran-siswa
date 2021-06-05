@@ -1,13 +1,14 @@
+from sqlite3.dbapi2 import connect
 import wx
-import Coba1
+import GUI
 import sqlite3
 
-dbconn = sqlite3.connect("E:/Kuliah/Semester 4/PBO/Coba Project/db_test.db")
-
+dbconn = sqlite3.connect("E:/data kuliah/semester 4/PBO 2/project/coding/db_test.db")
+conn= sqlite3.connect("E:/data kuliah/semester 4/PBO 2/project/coding/dbbaru.db")
 
 app = wx.App()
 
-class LoginFrame(Coba1.LoginFrame):
+class LoginFrame(GUI.LoginFrame):
     def __init__(self, parent):
         super().__init__(parent)
 
@@ -41,24 +42,51 @@ class LoginFrame(Coba1.LoginFrame):
            
            print('user ada')
 
-class MainFrameAdmin(Coba1.MainFrameAdmin):
+class MainFrameAdmin(GUI.MainFrameAdmin):
     def __init__(self, parent):
         super().__init__(parent)
 
+    def ShowSiswaData(self, event):
+        FrameShowData.Show()
+        FrameMainAdmin.Hide()
     def goLogOut(self, event):
         FrameLogin.Show()
         FrameMainAdmin.Hide()
     
-class MainFrameUser(Coba1.MainFrameUser):
+class MainFrameUser(GUI.MainFrameUser):
     def __init__(self, parent):
         super().__init__(parent)
 
+class ShowDataFrame(GUI.ShowData):
 
+    def __init__(self, parent):
+        super().__init__(parent)
+        cursor = conn.cursor()
+        self.grid.ClearGrid()
+
+        metadata = cursor.execute('SELECT * from User')
+        labels = []
+        for i in metadata.description:
+            labels.append(i[0])
+        labels = labels[1:]
+        for i in range(len(labels)):
+            self.grid.SetColLabelValue(i, labels[i])
+
+        logins = cursor.execute('SELECT * from User')
+        for row in logins:
+            row_num = row[0]
+            cells = row[1:]
+            for i in range(0,len(cells)):
+                if cells[i] != None and cells[i] != "null":
+                    self.grid.SetCellValue(row_num-1, i, str(cells[i]))
+        self.Show()
+        conn.commit()
 
 #daftar Frame
 FrameLogin = LoginFrame(None)
 FrameMainAdmin = MainFrameAdmin(None)
 FrameMainUser = MainFrameUser(None)
-FrameLogin.Show()
+FrameShowData = ShowDataFrame(None)
+FrameShowData.Show()
 app.MainLoop()
     
