@@ -1,11 +1,10 @@
 import wx
-from wx.core import Choice
+from wx.core import COMPOSITION_ATOP, Choice
 import GUI
 import sqlite3
 
-dbconn = sqlite3.connect("E:/data kuliah/semester 4/PBO 2/project/coding/db_test.db")
-conn= sqlite3.connect("E:/data kuliah/semester 4/PBO 2/project/coding/dbbaru.db")
-
+# dbconn = sqlite3.connect("E:/data kuliah/semester 4/PBO 2/project/coding/db_test.db")
+conn= sqlite3.connect("E:/Kuliah/Semester 4/PBO/ProjectPBO/database.db")
 app = wx.App()
 
 class LoginFrame(GUI.LoginFrame):
@@ -19,10 +18,10 @@ class LoginFrame(GUI.LoginFrame):
         getUserDB = 'SELECT * FROM User WHERE username="%s" AND password="%s"' % (uname, pwd)
         getAdminDB = 'SELECT * FROM Admin WHERE username = "%s" AND password = "%s"' % (uname, pwd)
 
-        cur = dbconn.cursor()
+        cur = conn.cursor()
         cur.execute(getUserDB)
         if (len(list(cur)) < 1):
-            curs = dbconn.cursor()
+            curs = conn.cursor()
             curs.execute(getAdminDB)
             if (len(list(curs)) > 0):
                 print('admin ada')
@@ -36,7 +35,7 @@ class LoginFrame(GUI.LoginFrame):
         else:
            FrameMainUser.Show()
            FrameLogin.Hide()
-           for row in dbconn.execute(getUserDB):
+           for row in conn.execute(getUserDB):
                FrameMainUser.nama_placeholder.SetLabel(row[3])
                FrameMainUser.username_placeholder.SetLabel(row[1])
            
@@ -109,7 +108,7 @@ class AddDataFrame(GUI.TambahData):
        JenisKelamin = self.Gender.GetStringSelection()
        TinggiBadan = self.BoxTinggiBadan.GetValue()
        BeratBadan = self.BoxBeratBadan.GetValue()
-       NIK = self.BoxNIK.GetValue()
+       nik = self.BoxNIK.GetValue()
        NoHP = self.BoxNomorHp.GetValue()
        Alamat = self.BoxAlamat.GetValue()
        NilaiUN = self.BoxNilaiUN.GetValue()
@@ -122,10 +121,15 @@ class AddDataFrame(GUI.TambahData):
        PekerjaanIbu = self.PekerjaanIbu.GetStringSelection()
        Status = self.Status.GetStringSelection()
 
+       addQuery = f'INSERT INTO User (Username, Password, NamaLengkap, TanggalLahir, Gender, Tinggi, Berat, NIK, NoHP, Alamat, NilaiUN, AsalSekolah, Jurusan, NamaAyah, NamaIbu, JmlSaudara, PekerjaanAyah, PekerjaanIbu, Status) VALUES ("{Username}", "{Password}", "{Nama}", "{TanggalLahir}", "{JenisKelamin}", "{TinggiBadan}", "{BeratBadan}", "{nik}", "{NoHP}", "{Alamat}", "{NilaiUN}", "{AsalSekolah}", "{Jurusan}", "{NamaAyah}", "{NamaIbu}", "{JumlahSaudara}", "{PekerjaanAyah}", "{PekerjaanIbu}", "{Status}")'
+
+       conn.execute(addQuery)
+       conn.commit()
+
     def Cancel(self, event):
         FrameShowData.Show()
         FrameAddData.Hide()
-    
+
 class EditDataFrame(GUI.EditData):
     def __init__(self, parent):
         super().__init__(parent)
@@ -138,7 +142,7 @@ class EditDataFrame(GUI.EditData):
        JenisKelamin = self.GenderEdit.GetStringSelection()
        TinggiBadan = self.BoxTinggiBadanEdit.GetValue()
        BeratBadan = self.BoxBeratBadanEdit.GetValue()
-       NIK = self.BoxNIKEdit.GetValue()
+       nik = self.BoxNIKEdit.GetValue()
        NoHP = self.BoxNomorHpEdit.GetValue()
        Alamat = self.BoxAlamatEdit.GetValue()
        NilaiUN = self.BoxNilaiUNEdit.GetValue()
@@ -155,6 +159,14 @@ class EditDataFrame(GUI.EditData):
         FrameShowData.Show()
         FrameEditData.Hide()
 
+    # def goEdit(self, event):
+    #     # wx.Dialog(CekID = input('Masukkan ID yang mau di edit'))
+    #     wx.MessageBox(CekID = input("Masukkan ID yang mau di edit"))
+
+    
+
+
+    
 class DeleteDataFrame(GUI.DeleteData):
     def __init__(self, parent):
         super().__init__(parent)
