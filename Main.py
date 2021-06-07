@@ -1,5 +1,5 @@
 import wx
-from wx.core import COMPOSITION_ATOP, Choice
+from wx.core import COMPOSITION_ATOP, Choice, DateSpan, DateTime
 import GUI
 import sqlite3
 
@@ -61,6 +61,8 @@ class ShowDataFrame(GUI.ShowData):
 
     def __init__(self, parent):
         super().__init__(parent)
+
+    def goShow(self, event):
         cursor = conn.cursor()
 
         metadata = cursor.execute('SELECT * from User')
@@ -72,7 +74,18 @@ class ShowDataFrame(GUI.ShowData):
             self.grid.SetColLabelValue(i, labels[i])
 
         Data = cursor.execute('SELECT * from User')
+        # for data_length in range(Data):
+        #     self.grid.AppendRows(1)
+        #     row_num = data_length[0]
+        #     cells = data_length[0:]
+        #     for i in range(0,len(cells)):
+        #         if cells[i] != None and cells[i] != "null":
+        #             self.grid.SetCellValue(row_num-1, i, str(cells[i]))
+        # conn.commit()
+
         for row in Data:
+            # self.grid.AppendRows(1)
+            # print(row)
             row_num = row[0]
             cells = row[0:]
             for i in range(0,len(cells)):
@@ -101,30 +114,34 @@ class AddDataFrame(GUI.TambahData):
         super().__init__(parent)
     
     def Submit(self, event):
-       Username = self.BoxUsername.GetValue()
-       Password = self.BoxPassword.GetValue()
-       Nama = self.BoxNama.GetValue()
-       TanggalLahir= self.BoxTanggalLahir.GetValue()
-       JenisKelamin = self.Gender.GetStringSelection()
-       TinggiBadan = self.BoxTinggiBadan.GetValue()
-       BeratBadan = self.BoxBeratBadan.GetValue()
-       nik = self.BoxNIK.GetValue()
-       NoHP = self.BoxNomorHp.GetValue()
-       Alamat = self.BoxAlamat.GetValue()
-       NilaiUN = self.BoxNilaiUN.GetValue()
-       AsalSekolah = self.AsalSekolah.GetStringSelection()
-       Jurusan = self.Jurusan.GetStringSelection()
-       NamaAyah = self.BoxNamaAyah.GetValue()
-       NamaIbu= self.BoxNamaIbu.GetValue()
-       JumlahSaudara = self.BoxJumlahSaudara.GetValue()
-       PekerjaanAyah = self.PekerjaanAyah.GetStringSelection()
-       PekerjaanIbu = self.PekerjaanIbu.GetStringSelection()
-       Status = self.Status.GetStringSelection()
+        Username = self.BoxUsername.GetValue()
+        Password = self.BoxPassword.GetValue()
+        Nama = self.BoxNama.GetValue()
+        TanggalLahir= str(self.BoxTanggalLahir.GetValue())
+        JenisKelamin = self.Gender.GetStringSelection()
+        TinggiBadan = self.BoxTinggiBadan.GetValue()
+        BeratBadan = self.BoxBeratBadan.GetValue()
+        nik = self.BoxNIK.GetValue()
+        NoHP = self.BoxNomorHp.GetValue()
+        Alamat = self.BoxAlamat.GetValue()
+        NilaiUN = self.BoxNilaiUN.GetValue()
+        AsalSekolah = self.AsalSekolah.GetStringSelection()
+        Jurusan = self.Jurusan.GetStringSelection()
+        NamaAyah = self.BoxNamaAyah.GetValue()
+        NamaIbu= self.BoxNamaIbu.GetValue()
+        JumlahSaudara = self.BoxJumlahSaudara.GetValue()
+        PekerjaanAyah = self.PekerjaanAyah.GetStringSelection()
+        PekerjaanIbu = self.PekerjaanIbu.GetStringSelection()
+        Status = self.Status.GetStringSelection()
 
-       addQuery = f'INSERT INTO User (Username, Password, NamaLengkap, TanggalLahir, Gender, Tinggi, Berat, NIK, NoHP, Alamat, NilaiUN, AsalSekolah, Jurusan, NamaAyah, NamaIbu, JmlSaudara, PekerjaanAyah, PekerjaanIbu, Status) VALUES ("{Username}", "{Password}", "{Nama}", "{TanggalLahir}", "{JenisKelamin}", "{TinggiBadan}", "{BeratBadan}", "{nik}", "{NoHP}", "{Alamat}", "{NilaiUN}", "{AsalSekolah}", "{Jurusan}", "{NamaAyah}", "{NamaIbu}", "{JumlahSaudara}", "{PekerjaanAyah}", "{PekerjaanIbu}", "{Status}")'
+        addQuery = f'INSERT INTO User (Username, Password, NamaLengkap, TanggalLahir, Gender, Tinggi, Berat, NIK, NoHP, Alamat, NilaiUN, AsalSekolah, Jurusan, NamaAyah, NamaIbu, JmlSaudara, PekerjaanAyah, PekerjaanIbu, Status) VALUES ("{Username}", "{Password}", "{Nama}", "{TanggalLahir}", "{JenisKelamin}", "{TinggiBadan}", "{BeratBadan}", "{nik}", "{NoHP}", "{Alamat}", "{NilaiUN}", "{AsalSekolah}", "{Jurusan}", "{NamaAyah}", "{NamaIbu}", "{JumlahSaudara}", "{PekerjaanAyah}", "{PekerjaanIbu}", "{Status}")'
 
-       conn.execute(addQuery)
-       conn.commit()
+        conn.execute(addQuery)
+        conn.commit()
+
+        # wx.MessageBox('Data Telah Ditambahkan')
+        # FrameAddData.Close()
+        # FrameShowData.Show()
 
     def Cancel(self, event):
         FrameShowData.Show()
@@ -163,8 +180,34 @@ class EditDataFrame(GUI.EditData):
     #     # wx.Dialog(CekID = input('Masukkan ID yang mau di edit'))
     #     wx.MessageBox(CekID = input("Masukkan ID yang mau di edit"))
 
-    
+    def idSearch(self, event):
+        queryID = self.BoxIDUser.GetValue()
+        searchQuery = f'SELECT * FROM User WHERE userId = {queryID}'
+        cur = conn.cursor()
+        cur.execute(searchQuery)
+        data = (cur.fetchall())
+        for row in data:
+            Username = self.BoxUsernameEdit.SetValue(row[1])
+            Password = self.BoxPasswordEdit.SetValue(row[2])
+            Nama = self.BoxNamaEdit.SetValue(row[3])
+            # TanggalLahir= self.BoxTanggalLahirEdit.SetValue(row[4])
+            JenisKelamin = self.GenderEdit.SetStringSelection(row[5])
+            TinggiBadan = self.BoxTinggiBadanEdit.SetValue(str(row[6]))
+            BeratBadan = self.BoxBeratBadanEdit.SetValue(str(row[7]))
+            nik = self.BoxNIKEdit.SetValue(row[8])
+            NoHP = self.BoxNomorHpEdit.SetValue(row[9])
+            Alamat = self.BoxAlamatEdit.SetValue(row[10])
+            NilaiUN = self.BoxNilaiUNEdit.SetValue(str(row[11]))
+            AsalSekolah = self.AsalSekolahEdit.SetStringSelection(row[12])
+            Jurusan = self.JurusanEdit.SetStringSelection(row[13])
+            NamaAyah = self.BoxNamaAyahEdit.SetValue(row[14])
+            NamaIbu= self.BoxNamaIbuEdit.SetValue(row[15])
+            JumlahSaudara = self.BoxJumlahSaudaraEdit.SetValue(str(row[16]))
+            PekerjaanAyah = self.PekerjaanAyahEdit.SetStringSelection(row[17])
+            PekerjaanIbu = self.PekerjaanIbuEdit.SetStringSelection(row[18])
+            Status = self.StatusEdit.SetStringSelection(row[19])
 
+        
 
     
 class DeleteDataFrame(GUI.DeleteData):
@@ -185,12 +228,18 @@ class DeleteDataFrame(GUI.DeleteData):
             row_num = row[0]
             cells = row[0:]
             for i in range(0,len(cells)):
+                self.grid.AppendRows(1)
                 if cells[i] != None and cells[i] != "null":
                     self.grid.SetCellValue(row_num-1, i, str(cells[i]))
         conn.commit()
 
     def HapusData(self, event):
-        Hapus = self.BoxHapus.GetValue()
+        IdHapus = self.BoxHapus.GetValue()
+        deleteQuery = f'DELETE * FROM User WHERE userId = {IdHapus}'
+        conn.execute(deleteQuery)
+        conn.commit()
+        FrameHapusData.Close()
+        FrameShowData.Show()
 
     def Cancel(self, event):
         FrameShowData.Show()
