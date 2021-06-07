@@ -250,16 +250,19 @@ class ShowData ( wx.Frame ):
 
 		bSizer3 = wx.BoxSizer( wx.HORIZONTAL )
 
-		self.ButtonTambahData = wx.Button( self, wx.ID_ANY, u"Tambah Data", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.ButtonTambahData = wx.Button( self, wx.ID_ANY, u"Tambah Data", wx.DefaultPosition, wx.Size( -1,30 ), 0 )
 		bSizer3.Add( self.ButtonTambahData, 0, wx.ALL, 5 )
 
-		self.m_button6 = wx.Button( self, wx.ID_ANY, u"Edit Data", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_button6 = wx.Button( self, wx.ID_ANY, u"Edit Data", wx.DefaultPosition, wx.Size( -1,30 ), 0 )
 		bSizer3.Add( self.m_button6, 0, wx.ALL, 5 )
 
-		self.m_button5 = wx.Button( self, wx.ID_ANY, u"Hapus Data", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_button5 = wx.Button( self, wx.ID_ANY, u"Hapus Data", wx.DefaultPosition, wx.Size( -1,30 ), 0 )
 		bSizer3.Add( self.m_button5, 0, wx.ALL, 5 )
 
-		self.m_button43 = wx.Button( self, wx.ID_ANY, u"Cancel", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_button37 = wx.Button( self, wx.ID_ANY, u"Refresh Data", wx.DefaultPosition, wx.Size( -1,30 ), 0 )
+		bSizer3.Add( self.m_button37, 0, wx.ALL, 5 )
+
+		self.m_button43 = wx.Button( self, wx.ID_ANY, u"Cancel", wx.DefaultPosition, wx.Size( -1,30 ), 0 )
 		bSizer3.Add( self.m_button43, 0, wx.ALL, 5 )
 
 
@@ -304,9 +307,11 @@ class ShowData ( wx.Frame ):
 		self.Centre( wx.BOTH )
 
 		# Connect Events
+		self.Bind( wx.EVT_ACTIVATE, self.goShow )
 		self.ButtonTambahData.Bind( wx.EVT_BUTTON, self.TambahData )
 		self.m_button6.Bind( wx.EVT_BUTTON, self.EditData )
 		self.m_button5.Bind( wx.EVT_BUTTON, self.HapusData )
+		self.m_button37.Bind( wx.EVT_BUTTON, self.goShow )
 		self.m_button43.Bind( wx.EVT_BUTTON, self.Cancel )
 
 	def __del__( self ):
@@ -314,6 +319,9 @@ class ShowData ( wx.Frame ):
 
 
 	# Virtual event handlers, overide them in your derived class
+	def goShow( self, event ):
+		event.Skip()
+
 	def TambahData( self, event ):
 		event.Skip()
 
@@ -322,6 +330,7 @@ class ShowData ( wx.Frame ):
 
 	def HapusData( self, event ):
 		event.Skip()
+
 
 	def Cancel( self, event ):
 		event.Skip()
@@ -352,6 +361,14 @@ class EditData ( wx.Frame ):
 		fgSizer61 = wx.FlexGridSizer( 0, 2, 0, 0 )
 		fgSizer61.SetFlexibleDirection( wx.BOTH )
 		fgSizer61.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
+
+		self.m_staticText74 = wx.StaticText( self, wx.ID_ANY, u"ID User", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText74.Wrap( -1 )
+
+		fgSizer61.Add( self.m_staticText74, 0, wx.ALL, 5 )
+
+		self.BoxIDUser = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 125,-1 ), 0 )
+		fgSizer61.Add( self.BoxIDUser, 0, wx.ALL, 5 )
 
 		self.m_staticText381 = wx.StaticText( self, wx.ID_ANY, u"Username", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText381.Wrap( -1 )
@@ -443,22 +460,18 @@ class EditData ( wx.Frame ):
 		self.BoxNilaiUNEdit = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 125,-1 ), 0 )
 		fgSizer61.Add( self.BoxNilaiUNEdit, 0, wx.ALL, 5 )
 
-		self.m_staticText481 = wx.StaticText( self, wx.ID_ANY, u"Asal Sekolah", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText481.Wrap( -1 )
-
-		fgSizer61.Add( self.m_staticText481, 0, wx.ALL, 5 )
-
-		AsalSekolahEditChoices = [ u"SMPN 1 Pekoland", u"SMP 5 Curahtatal", u"SMPK 14 Axioma", u"SMP 2 Jember", u"SMPN 3 Bondowoso", u"MTS Al-Ahlan" ]
-		self.AsalSekolahEdit = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, AsalSekolahEditChoices, 0 )
-		self.AsalSekolahEdit.SetSelection( 0 )
-		fgSizer61.Add( self.AsalSekolahEdit, 0, wx.ALL, 5 )
-
 
 		bSizer1011.Add( fgSizer61, 1, wx.EXPAND, 5 )
 
 		fgSizer71 = wx.FlexGridSizer( 0, 2, 0, 0 )
 		fgSizer71.SetFlexibleDirection( wx.BOTH )
 		fgSizer71.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
+
+		self.m_button36 = wx.Button( self, wx.ID_ANY, u"Cari ID", wx.DefaultPosition, wx.DefaultSize, 0 )
+		fgSizer71.Add( self.m_button36, 0, wx.ALL, 5 )
+
+
+		fgSizer71.Add( ( 0, 0), 1, wx.EXPAND, 5 )
 
 		self.m_staticText491 = wx.StaticText( self, wx.ID_ANY, u"Jurusan Pilihan", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText491.Wrap( -1 )
@@ -524,6 +537,16 @@ class EditData ( wx.Frame ):
 		self.StatusEdit.SetSelection( 2 )
 		fgSizer71.Add( self.StatusEdit, 0, wx.ALL, 5 )
 
+		self.m_staticText481 = wx.StaticText( self, wx.ID_ANY, u"Asal Sekolah", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText481.Wrap( -1 )
+
+		fgSizer71.Add( self.m_staticText481, 0, wx.ALL, 5 )
+
+		AsalSekolahEditChoices = [ u"SMPN 1 Pekoland", u"SMP 5 Curahtatal", u"SMPK 14 Axioma", u"SMP 2 Jember", u"SMPN 3 Bondowoso", u"MTS Al-Ahlan" ]
+		self.AsalSekolahEdit = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, AsalSekolahEditChoices, 0 )
+		self.AsalSekolahEdit.SetSelection( 0 )
+		fgSizer71.Add( self.AsalSekolahEdit, 0, wx.ALL, 5 )
+
 
 		bSizer1011.Add( fgSizer71, 1, wx.EXPAND, 5 )
 
@@ -553,6 +576,7 @@ class EditData ( wx.Frame ):
 
 		# Connect Events
 		self.Bind( wx.EVT_ACTIVATE, self.goEdit )
+		self.m_button36.Bind( wx.EVT_BUTTON, self.idSearch )
 		self.m_button42.Bind( wx.EVT_BUTTON, self.Submit )
 		self.m_button43.Bind( wx.EVT_BUTTON, self.Cancel )
 
@@ -562,6 +586,9 @@ class EditData ( wx.Frame ):
 
 	# Virtual event handlers, overide them in your derived class
 	def goEdit( self, event ):
+		event.Skip()
+
+	def idSearch( self, event ):
 		event.Skip()
 
 	def Submit( self, event ):
@@ -1172,7 +1199,7 @@ class DeleteData ( wx.Frame ):
 		self.grid = wx.grid.Grid( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
 
 		# Grid
-		self.grid.CreateGrid( 5, 21 )
+		self.grid.CreateGrid( 6, 21 )
 		self.grid.EnableEditing( False )
 		self.grid.EnableGridLines( True )
 		self.grid.EnableDragGridSize( False )
