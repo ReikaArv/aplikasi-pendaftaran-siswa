@@ -7,7 +7,7 @@ import sqlite3
 conn= sqlite3.connect("E:/Kuliah/Semester 4/PBO/ProjectPBO/database.db")
 app = wx.App()
 
-uname_cache = 0
+uname_cache = 'test'
 
 class LoginFrame(GUI.LoginFrame):
     def __init__(self, parent):
@@ -80,11 +80,11 @@ class MainFrameUser(GUI.MainFrameUser):
             NoHP = self.PlaceHolderNOHP.SetLabel(row[9])
             Alamat = self.PlaceHolderAlamat.SetLabel(row[10])
             NilaiUN = self.PlaceHolderNilaiUN.SetLabel(str(row[11]))
-            AsalSekolah = self.AsalSekolah.SetLabel(row[12])
+            AsalSekolah = self.PlaceHolderAsalSekolah.SetLabel(row[12])
             Jurusan = self.PlaceHolderJurusan.SetLabel(row[13])
             NamaAyah = self.PlaceHoldeNamaAyah.SetLabel(row[14])
             NamaIbu= self.PlaceHolderNamaIbu.SetLabel(row[15])
-            JumlahSaudara = self.JumlahSaudara.SetLabel(str(row[16]))
+            JumlahSaudara = self.PlaceHolderJumlahSaudara.SetLabel(str(row[16]))
             PekerjaanAyah = self.PlaceHolderPekerjaanAyah.SetLabel(row[17])
             PekerjaanIbu = self.PlaceHolderPekerjaanIbu.SetLabel(row[18])
             Status = self.PlaceHolderStatus.SetLabel(row[19])
