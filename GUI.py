@@ -182,17 +182,25 @@ class MainFrameUser ( wx.Frame ):
 
 		fgSizer2.Add( self.m_staticText6, 0, wx.ALL, 5 )
 
-		self.username_placeholder = wx.StaticText( self, wx.ID_ANY, u"NAMA_LENGKAP_SISWA", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.username_placeholder = wx.StaticText( self, wx.ID_ANY, u"Username_user", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.username_placeholder.Wrap( -1 )
 
 		fgSizer2.Add( self.username_placeholder, 0, wx.ALL, 5 )
+
+
+		fgSizer2.Add( ( 0, 0), 1, wx.EXPAND, 5 )
+
+		self.m_staticText102 = wx.StaticText( self, wx.ID_ANY, u" ", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText102.Wrap( -1 )
+
+		fgSizer2.Add( self.m_staticText102, 0, wx.ALL, 5 )
 
 		self.m_staticText7 = wx.StaticText( self, wx.ID_ANY, u"Nama Lengkap :", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText7.Wrap( -1 )
 
 		fgSizer2.Add( self.m_staticText7, 0, wx.ALL, 5 )
 
-		self.PlaceHolderNama = wx.StaticText( self, wx.ID_ANY, u"_Nama_", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.PlaceHolderNama = wx.StaticText( self, wx.ID_ANY, u"Loading...", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.PlaceHolderNama.Wrap( -1 )
 
 		fgSizer2.Add( self.PlaceHolderNama, 0, wx.ALL, 5 )
@@ -202,7 +210,7 @@ class MainFrameUser ( wx.Frame ):
 
 		fgSizer2.Add( self.m_staticText9, 0, wx.ALL, 5 )
 
-		self.PlaceHolderTanggal = wx.StaticText( self, wx.ID_ANY, u"_Tanggal Lahir_", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.PlaceHolderTanggal = wx.StaticText( self, wx.ID_ANY, u"Loading...", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.PlaceHolderTanggal.Wrap( -1 )
 
 		fgSizer2.Add( self.PlaceHolderTanggal, 0, wx.ALL, 5 )
@@ -212,7 +220,7 @@ class MainFrameUser ( wx.Frame ):
 
 		fgSizer2.Add( self.m_staticText11, 0, wx.ALL, 5 )
 
-		self.PlaceHolderGender = wx.StaticText( self, wx.ID_ANY, u"_Gender_", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.PlaceHolderGender = wx.StaticText( self, wx.ID_ANY, u"Loading...", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.PlaceHolderGender.Wrap( -1 )
 
 		fgSizer2.Add( self.PlaceHolderGender, 0, wx.ALL, 5 )
@@ -222,7 +230,7 @@ class MainFrameUser ( wx.Frame ):
 
 		fgSizer2.Add( self.m_staticText13, 0, wx.ALL, 5 )
 
-		self.PlaceHolderTinggi = wx.StaticText( self, wx.ID_ANY, u"_Tinggi_", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.PlaceHolderTinggi = wx.StaticText( self, wx.ID_ANY, u"Loading...", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.PlaceHolderTinggi.Wrap( -1 )
 
 		fgSizer2.Add( self.PlaceHolderTinggi, 0, wx.ALL, 5 )
@@ -232,7 +240,7 @@ class MainFrameUser ( wx.Frame ):
 
 		fgSizer2.Add( self.m_staticText75, 0, wx.ALL, 5 )
 
-		self.PlaceHolderBerat = wx.StaticText( self, wx.ID_ANY, u"_berat_", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.PlaceHolderBerat = wx.StaticText( self, wx.ID_ANY, u"Loading...", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.PlaceHolderBerat.Wrap( -1 )
 
 		fgSizer2.Add( self.PlaceHolderBerat, 0, wx.ALL, 5 )
@@ -242,7 +250,7 @@ class MainFrameUser ( wx.Frame ):
 
 		fgSizer2.Add( self.m_staticText77, 0, wx.ALL, 5 )
 
-		self.PlaceHolderNIK = wx.StaticText( self, wx.ID_ANY, u"_NIK_", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.PlaceHolderNIK = wx.StaticText( self, wx.ID_ANY, u"Loading...", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.PlaceHolderNIK.Wrap( -1 )
 
 		fgSizer2.Add( self.PlaceHolderNIK, 0, wx.ALL, 5 )
@@ -252,7 +260,7 @@ class MainFrameUser ( wx.Frame ):
 
 		fgSizer2.Add( self.m_staticText79, 0, wx.ALL, 5 )
 
-		self.PlaceHolderNOHP = wx.StaticText( self, wx.ID_ANY, u"_NOHP_", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.PlaceHolderNOHP = wx.StaticText( self, wx.ID_ANY, u"Loading...", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.PlaceHolderNOHP.Wrap( -1 )
 
 		fgSizer2.Add( self.PlaceHolderNOHP, 0, wx.ALL, 5 )
@@ -262,7 +270,7 @@ class MainFrameUser ( wx.Frame ):
 
 		fgSizer2.Add( self.m_staticText81, 0, wx.ALL, 5 )
 
-		self.PlaceHolderAlamat = wx.StaticText( self, wx.ID_ANY, u"_Alamat_", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.PlaceHolderAlamat = wx.StaticText( self, wx.ID_ANY, u"Loading...", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.PlaceHolderAlamat.Wrap( -1 )
 
 		fgSizer2.Add( self.PlaceHolderAlamat, 0, wx.ALL, 5 )
@@ -272,7 +280,7 @@ class MainFrameUser ( wx.Frame ):
 
 		fgSizer2.Add( self.m_staticText83, 0, wx.ALL, 5 )
 
-		self.PlaceHolderNilaiUN = wx.StaticText( self, wx.ID_ANY, u"_NIlaiUN_", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.PlaceHolderNilaiUN = wx.StaticText( self, wx.ID_ANY, u"Loading...", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.PlaceHolderNilaiUN.Wrap( -1 )
 
 		fgSizer2.Add( self.PlaceHolderNilaiUN, 0, wx.ALL, 5 )
@@ -284,22 +292,22 @@ class MainFrameUser ( wx.Frame ):
 		fgSizer12.SetFlexibleDirection( wx.BOTH )
 		fgSizer12.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
 
-		self.m_staticText85 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText85.Wrap( -1 )
+		self.m_button38 = wx.Button( self, wx.ID_ANY, u"Tampilkan Data Saya", wx.DefaultPosition, wx.Size( -1,30 ), 0 )
+		fgSizer12.Add( self.m_button38, 0, wx.ALL, 5 )
 
-		fgSizer12.Add( self.m_staticText85, 0, wx.ALL, 5 )
+		self.m_staticText104 = wx.StaticText( self, wx.ID_ANY, u"  ", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText104.Wrap( -1 )
 
-		self.m_staticText86 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText86.Wrap( -1 )
+		self.m_staticText104.SetMaxSize( wx.Size( -1,5 ) )
 
-		fgSizer12.Add( self.m_staticText86, 0, wx.ALL, 5 )
+		fgSizer12.Add( self.m_staticText104, 0, wx.ALL, 5 )
 
 		self.AsalSekolah = wx.StaticText( self, wx.ID_ANY, u"Asal Sekolah : ", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.AsalSekolah.Wrap( -1 )
 
 		fgSizer12.Add( self.AsalSekolah, 0, wx.ALL, 5 )
 
-		self.PlaceHolderAsalSekolah = wx.StaticText( self, wx.ID_ANY, u"_AsalSekolah__", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.PlaceHolderAsalSekolah = wx.StaticText( self, wx.ID_ANY, u"Loading...", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.PlaceHolderAsalSekolah.Wrap( -1 )
 
 		fgSizer12.Add( self.PlaceHolderAsalSekolah, 0, wx.ALL, 5 )
@@ -309,7 +317,7 @@ class MainFrameUser ( wx.Frame ):
 
 		fgSizer12.Add( self.m_staticText89, 0, wx.ALL, 5 )
 
-		self.PlaceHolderJurusan = wx.StaticText( self, wx.ID_ANY, u"_Jurusan_", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.PlaceHolderJurusan = wx.StaticText( self, wx.ID_ANY, u"Loading...", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.PlaceHolderJurusan.Wrap( -1 )
 
 		fgSizer12.Add( self.PlaceHolderJurusan, 0, wx.ALL, 5 )
@@ -319,7 +327,7 @@ class MainFrameUser ( wx.Frame ):
 
 		fgSizer12.Add( self.m_staticText91, 0, wx.ALL, 5 )
 
-		self.PlaceHoldeNamaAyah = wx.StaticText( self, wx.ID_ANY, u"_NamaAyah_", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.PlaceHoldeNamaAyah = wx.StaticText( self, wx.ID_ANY, u"Loading...", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.PlaceHoldeNamaAyah.Wrap( -1 )
 
 		fgSizer12.Add( self.PlaceHoldeNamaAyah, 0, wx.ALL, 5 )
@@ -329,7 +337,7 @@ class MainFrameUser ( wx.Frame ):
 
 		fgSizer12.Add( self.m_staticText93, 0, wx.ALL, 5 )
 
-		self.PlaceHolderNamaIbu = wx.StaticText( self, wx.ID_ANY, u"_NamaIbu_", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.PlaceHolderNamaIbu = wx.StaticText( self, wx.ID_ANY, u"Loading...", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.PlaceHolderNamaIbu.Wrap( -1 )
 
 		fgSizer12.Add( self.PlaceHolderNamaIbu, 0, wx.ALL, 5 )
@@ -339,7 +347,7 @@ class MainFrameUser ( wx.Frame ):
 
 		fgSizer12.Add( self.JumlahSaudara, 0, wx.ALL, 5 )
 
-		self.PlaceHolderJumlahSaudara = wx.StaticText( self, wx.ID_ANY, u"_JumlahSaudara_", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.PlaceHolderJumlahSaudara = wx.StaticText( self, wx.ID_ANY, u"Loading...", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.PlaceHolderJumlahSaudara.Wrap( -1 )
 
 		fgSizer12.Add( self.PlaceHolderJumlahSaudara, 0, wx.ALL, 5 )
@@ -349,7 +357,7 @@ class MainFrameUser ( wx.Frame ):
 
 		fgSizer12.Add( self.label1, 0, wx.ALL, 5 )
 
-		self.PlaceHolderPekerjaanAyah = wx.StaticText( self, wx.ID_ANY, u"_PekerjaanAyah_", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.PlaceHolderPekerjaanAyah = wx.StaticText( self, wx.ID_ANY, u"Loading...", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.PlaceHolderPekerjaanAyah.Wrap( -1 )
 
 		fgSizer12.Add( self.PlaceHolderPekerjaanAyah, 0, wx.ALL, 5 )
@@ -359,7 +367,7 @@ class MainFrameUser ( wx.Frame ):
 
 		fgSizer12.Add( self.label2, 0, wx.ALL, 5 )
 
-		self.PlaceHolderPekerjaanIbu = wx.StaticText( self, wx.ID_ANY, u"_PekerjaanIbu_", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.PlaceHolderPekerjaanIbu = wx.StaticText( self, wx.ID_ANY, u"Loading...", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.PlaceHolderPekerjaanIbu.Wrap( -1 )
 
 		fgSizer12.Add( self.PlaceHolderPekerjaanIbu, 0, wx.ALL, 5 )
@@ -369,7 +377,7 @@ class MainFrameUser ( wx.Frame ):
 
 		fgSizer12.Add( self.lbel3, 0, wx.ALL, 5 )
 
-		self.PlaceHolderStatus = wx.StaticText( self, wx.ID_ANY, u"_Status_", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.PlaceHolderStatus = wx.StaticText( self, wx.ID_ANY, u"Loading...", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.PlaceHolderStatus.Wrap( -1 )
 
 		fgSizer12.Add( self.PlaceHolderStatus, 0, wx.ALL, 5 )
@@ -385,6 +393,7 @@ class MainFrameUser ( wx.Frame ):
 
 		# Connect Events
 		self.Bind( wx.EVT_ACTIVATE, self.goShowUser )
+		self.m_button38.Bind( wx.EVT_BUTTON, self.goShowUser )
 
 	def __del__( self ):
 		pass
@@ -393,6 +402,7 @@ class MainFrameUser ( wx.Frame ):
 	# Virtual event handlers, overide them in your derived class
 	def goShowUser( self, event ):
 		event.Skip()
+
 
 
 ###########################################################################
