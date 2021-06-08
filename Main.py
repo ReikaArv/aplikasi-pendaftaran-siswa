@@ -7,6 +7,8 @@ import sqlite3
 conn= sqlite3.connect("E:/Kuliah/Semester 4/PBO/ProjectPBO/database.db")
 app = wx.App()
 
+uname_cache = 0
+
 class LoginFrame(GUI.LoginFrame):
     def __init__(self, parent):
         super().__init__(parent)
@@ -36,8 +38,10 @@ class LoginFrame(GUI.LoginFrame):
            FrameMainUser.Show()
            FrameLogin.Hide()
            for row in conn.execute(getUserDB):
-               FrameMainUser.nama_placeholder.SetLabel(row[3])
+               # FrameMainUser.nama_placeholder.SetLabel(row[3])
                FrameMainUser.username_placeholder.SetLabel(row[1])
+               uname_cache = row[1]
+               print(uname_cache)
            
            print('user ada')
 
@@ -56,6 +60,36 @@ class MainFrameAdmin(GUI.MainFrameAdmin):
 class MainFrameUser(GUI.MainFrameUser):
     def __init__(self, parent):
         super().__init__(parent)
+
+    def goShowUser(self, event):
+        uname = self.username_placeholder.GetLabel()
+        print(uname)
+        getUserDB = 'SELECT * FROM User WHERE username="%s"' % (uname)
+        cur = conn.cursor()
+        cur.execute(getUserDB)
+        data = (cur.fetchall())
+        print(data)
+        print(uname_cache)
+        for row in data:
+            Nama = self.PlaceHolderNama.SetLabel(row[3])
+            TanggalLahir= self.PlaceHolderTanggal.SetLabel(row[4])
+            JenisKelamin = self.PlaceHolderGender.SetLabel(row[5])
+            TinggiBadan = self.PlaceHolderTinggi.SetLabel(str(row[6]))
+            BeratBadan = self.PlaceHolderBerat.SetLabel(str(row[7]))
+            nik = self.PlaceHolderNIK.SetLabel(row[8])
+            NoHP = self.PlaceHolderNOHP.SetLabel(row[9])
+            Alamat = self.PlaceHolderAlamat.SetLabel(row[10])
+            NilaiUN = self.PlaceHolderNilaiUN.SetLabel(str(row[11]))
+            AsalSekolah = self.AsalSekolah.SetLabel(row[12])
+            Jurusan = self.PlaceHolderJurusan.SetLabel(row[13])
+            NamaAyah = self.PlaceHoldeNamaAyah.SetLabel(row[14])
+            NamaIbu= self.PlaceHolderNamaIbu.SetLabel(row[15])
+            JumlahSaudara = self.JumlahSaudara.SetLabel(str(row[16]))
+            PekerjaanAyah = self.PlaceHolderPekerjaanAyah.SetLabel(row[17])
+            PekerjaanIbu = self.PlaceHolderPekerjaanIbu.SetLabel(row[18])
+            Status = self.PlaceHolderStatus.SetLabel(row[19])
+        
+
 
 class ShowDataFrame(GUI.ShowData):
 
