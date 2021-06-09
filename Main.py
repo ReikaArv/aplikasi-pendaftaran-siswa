@@ -1,13 +1,14 @@
+from os import close
 import wx
 from wx.core import COMPOSITION_ATOP, Choice, DateSpan, DateTime
 import GUI
 import sqlite3
 
 # dbconn = sqlite3.connect("E:/data kuliah/semester 4/PBO 2/project/coding/db_test.db")
-conn= sqlite3.connect("E:/Kuliah/Semester 4/PBO/ProjectPBO/database.db")
+conn= sqlite3.connect("E:/data kuliah/semester 4/PBO 2/Project/coding/database.db")
 app = wx.App()
 
-uname_cache = 'test'
+uname_cache = 0
 
 class LoginFrame(GUI.LoginFrame):
     def __init__(self, parent):
@@ -41,9 +42,15 @@ class LoginFrame(GUI.LoginFrame):
                # FrameMainUser.nama_placeholder.SetLabel(row[3])
                FrameMainUser.username_placeholder.SetLabel(row[1])
                uname_cache = row[1]
-               print(uname_cache)
+            #    print(uname_cache)
            
            print('user ada')
+    def Open(self, event):
+        self.uname_text.SetValue("")
+        self.pwd_text.SetValue("")
+
+    def Close(self, force):
+        app.ExitMainLoop()
 
 class MainFrameAdmin(GUI.MainFrameAdmin):
     def __init__(self, parent):
@@ -57,18 +64,21 @@ class MainFrameAdmin(GUI.MainFrameAdmin):
         FrameLogin.Show()
         FrameMainAdmin.Hide()
     
+    def Close(self, force):
+        app.ExitMainLoop()
+    
 class MainFrameUser(GUI.MainFrameUser):
     def __init__(self, parent):
         super().__init__(parent)
 
     def goShowUser(self, event):
         uname = self.username_placeholder.GetLabel()
-        print(uname)
+        # print(uname)
         getUserDB = 'SELECT * FROM User WHERE username="%s"' % (uname)
         cur = conn.cursor()
         cur.execute(getUserDB)
         data = (cur.fetchall())
-        print(data)
+        # print(data)
         print(uname_cache)
         for row in data:
             Nama = self.PlaceHolderNama.SetLabel(row[3])
@@ -80,26 +90,63 @@ class MainFrameUser(GUI.MainFrameUser):
             NoHP = self.PlaceHolderNOHP.SetLabel(row[9])
             Alamat = self.PlaceHolderAlamat.SetLabel(row[10])
             NilaiUN = self.PlaceHolderNilaiUN.SetLabel(str(row[11]))
-            AsalSekolah = self.PlaceHolderAsalSekolah.SetLabel(row[12])
+            AsalSekolah = self.AsalSekolah.SetLabel(row[12])
             Jurusan = self.PlaceHolderJurusan.SetLabel(row[13])
             NamaAyah = self.PlaceHoldeNamaAyah.SetLabel(row[14])
             NamaIbu= self.PlaceHolderNamaIbu.SetLabel(row[15])
-            JumlahSaudara = self.PlaceHolderJumlahSaudara.SetLabel(str(row[16]))
+            JumlahSaudara = self.JumlahSaudara.SetLabel(str(row[16]))
             PekerjaanAyah = self.PlaceHolderPekerjaanAyah.SetLabel(row[17])
             PekerjaanIbu = self.PlaceHolderPekerjaanIbu.SetLabel(row[18])
             Status = self.PlaceHolderStatus.SetLabel(row[19])
+
+        def Close(self, force):
+         app.ExitMainLoop()
         
-
-
 class ShowDataFrame(GUI.ShowData):
 
     def __init__(self, parent):
         super().__init__(parent)
+        self.count=0
 
-    def goShow(self, event):
+    def ShowData(self, event):
+        print(self.count)
+        if self.count == 0 :
+            cursor = conn.cursor()
+
+            metadata = cursor.execute('SELECT * from User')
+            labels = []
+            for i in metadata.description:
+                labels.append(i[0])
+            labels = labels[0:]
+            for i in range(len(labels)):
+                self.grid.SetColLabelValue(i, labels[i])
+
+            Data = cursor.execute('SELECT * from User')
+            for row in Data:
+                self.grid.AppendRows(1)
+                # print(row)
+                row_num = row[0]
+                cells = row[0:]
+                for i in range(0,len(cells)):
+                    if cells[i] != None and cells[i] != "null":
+                        self.grid.SetCellValue(row_num-1, i, str(cells[i]))
+            conn.commit()
+            cursor.close()
+            self.count=1
+        else :
+            event.Skip()
+
+    def Refresh(self, event):
+        self.grid.ClearGrid()
         cursor = conn.cursor()
 
         metadata = cursor.execute('SELECT * from User')
+        Data = cursor.fetchall()
+        print(len(Data))
+        for i in Data :
+            self.grid.DeleteRows(0)
+        
+        
         labels = []
         for i in metadata.description:
             labels.append(i[0])
@@ -108,17 +155,8 @@ class ShowDataFrame(GUI.ShowData):
             self.grid.SetColLabelValue(i, labels[i])
 
         Data = cursor.execute('SELECT * from User')
-        # for data_length in range(Data):
-        #     self.grid.AppendRows(1)
-        #     row_num = data_length[0]
-        #     cells = data_length[0:]
-        #     for i in range(0,len(cells)):
-        #         if cells[i] != None and cells[i] != "null":
-        #             self.grid.SetCellValue(row_num-1, i, str(cells[i]))
-        # conn.commit()
-
         for row in Data:
-            # self.grid.AppendRows(1)
+            self.grid.AppendRows(1)
             # print(row)
             row_num = row[0]
             cells = row[0:]
@@ -130,6 +168,7 @@ class ShowDataFrame(GUI.ShowData):
     def TambahData(self,event):
         FrameAddData.Show()
         FrameShowData.Hide()
+        self.count=0
     
     def EditData(self, event):
         FrameEditData.Show()
@@ -142,6 +181,9 @@ class ShowDataFrame(GUI.ShowData):
     def Cancel(self, event):
         FrameMainAdmin.Show()
         FrameShowData.Hide()
+
+    def Close(self, event):
+        app.ExitMainLoop()
 
 class AddDataFrame(GUI.TambahData):
     def __init__(self, parent):
@@ -173,13 +215,31 @@ class AddDataFrame(GUI.TambahData):
         conn.execute(addQuery)
         conn.commit()
 
-        # wx.MessageBox('Data Telah Ditambahkan')
-        # FrameAddData.Close()
-        # FrameShowData.Show()
+        wx.MessageBox('Data Telah Ditambahkan')
+        FrameAddData.Hide()
+        FrameShowData.Show()
 
     def Cancel(self, event):
         FrameShowData.Show()
         FrameAddData.Hide()
+
+    def Open(self, event):
+        self.BoxUsername.SetValue("")
+        self.BoxPassword.SetValue("")
+        self.BoxNama.SetValue("")
+        self.BoxNamaAyah.SetValue("")
+        self.BoxNamaIbu.SetValue("")
+        self.BoxTinggiBadan.SetValue("")
+        self.BoxBeratBadan.SetValue("")
+        self.BoxNIK.SetValue("")
+        self.BoxNomorHp.SetValue("")
+        self.BoxAlamat.SetValue("")
+        self.BoxNilaiUN.SetValue("")
+        self.BoxJumlahSaudara.SetValue("")
+
+
+    def Close(self, force):
+        app.ExitMainLoop()
 
 class EditDataFrame(GUI.EditData):
     def __init__(self, parent):
@@ -210,9 +270,20 @@ class EditDataFrame(GUI.EditData):
         FrameShowData.Show()
         FrameEditData.Hide()
 
-    # def goEdit(self, event):
-    #     # wx.Dialog(CekID = input('Masukkan ID yang mau di edit'))
-    #     wx.MessageBox(CekID = input("Masukkan ID yang mau di edit"))
+    def Open(self, event):
+        self.BoxUsernameEdit.SetValue("")
+        self.BoxPasswordEdit.SetValue("")
+        self.BoxNamaEdit.SetValue("")
+        self.BoxNamaAyahEdit.SetValue("")
+        self.BoxNamaIbuEdit.SetValue("")
+        self.BoxTinggiBadanEdit.SetValue("")
+        self.BoxBeratBadanEdit.SetValue("")
+        self.BoxNIKEdit.SetValue("")
+        self.BoxNomorHpEdit.SetValue("")
+        self.BoxAlamatEdit.SetValue("")
+        self.BoxNilaiUNEdit.SetValue("")
+        self.BoxJumlahSaudaraEdit.SetValue("")
+
 
     def idSearch(self, event):
         queryID = self.BoxIDUser.GetValue()
@@ -240,16 +311,57 @@ class EditDataFrame(GUI.EditData):
             PekerjaanAyah = self.PekerjaanAyahEdit.SetStringSelection(row[17])
             PekerjaanIbu = self.PekerjaanIbuEdit.SetStringSelection(row[18])
             Status = self.StatusEdit.SetStringSelection(row[19])
-
         
 
+
+        def Close(self, force):
+           app.ExitMainLoop()
     
 class DeleteDataFrame(GUI.DeleteData):
     def __init__(self, parent):
         super().__init__(parent)
+        self.count=0
+
+    def ShowData(self, event):
+        print(self.count)
+        self.BoxHapus.SetValue("")
+        if self.count == 0 :
+            cursor = conn.cursor()
+
+            metadata = cursor.execute('SELECT * from User')
+            labels = []
+            for i in metadata.description:
+                labels.append(i[0])
+            labels = labels[0:]
+            for i in range(len(labels)):
+                self.grid.SetColLabelValue(i, labels[i])
+
+            Data = cursor.execute('SELECT * from User')
+            for row in Data:
+                self.grid.AppendRows(1)
+                # print(row)
+                row_num = row[0]
+                cells = row[0:]
+                for i in range(0,len(cells)):
+                    if cells[i] != None and cells[i] != "null":
+                        self.grid.SetCellValue(row_num-1, i, str(cells[i]))
+            conn.commit()
+            cursor.close()
+            self.count=1
+        else :
+            event.Skip()
+        
+    def Refresh(self, event):
+        self.grid.ClearGrid()
         cursor = conn.cursor()
 
         metadata = cursor.execute('SELECT * from User')
+        Data = cursor.fetchall()
+        print(len(Data))
+        for i in Data :
+            self.grid.DeleteRows(0)
+        
+        
         labels = []
         for i in metadata.description:
             labels.append(i[0])
@@ -259,28 +371,36 @@ class DeleteDataFrame(GUI.DeleteData):
 
         Data = cursor.execute('SELECT * from User')
         for row in Data:
+            self.grid.AppendRows(1)
+            # print(row)
             row_num = row[0]
             cells = row[0:]
             for i in range(0,len(cells)):
-                self.grid.AppendRows(1)
                 if cells[i] != None and cells[i] != "null":
                     self.grid.SetCellValue(row_num-1, i, str(cells[i]))
         conn.commit()
 
+     
+
+
     def HapusData(self, event):
         IdHapus = self.BoxHapus.GetValue()
-        deleteQuery = f'DELETE * FROM User WHERE userId = {IdHapus}'
+        deleteQuery = f'DELETE FROM User WHERE userId = {IdHapus}'
         conn.execute(deleteQuery)
         conn.commit()
-        FrameHapusData.Close()
+        FrameHapusData.Hide()
         FrameShowData.Show()
 
     def Cancel(self, event):
         FrameShowData.Show()
         FrameHapusData.Hide()
 
-
     
+    def Close(self, force):
+        app.ExitMainLoop()
+
+
+     
 
 #daftar Frame
 FrameLogin = LoginFrame(None)
