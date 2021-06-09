@@ -62,7 +62,7 @@ class LoginFrame ( wx.Frame ):
 
 		fgSizer1.Add( self.m_staticText3, 0, wx.ALL, 5 )
 
-		self.pwd_text = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 240,-1 ), 0 )
+		self.pwd_text = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 240,-1 ), wx.TE_PASSWORD )
 		fgSizer1.Add( self.pwd_text, 0, wx.ALL, 5 )
 
 
@@ -89,6 +89,8 @@ class LoginFrame ( wx.Frame ):
 		self.Centre( wx.BOTH )
 
 		# Connect Events
+		self.Bind( wx.EVT_ACTIVATE, self.Open )
+		self.Bind( wx.EVT_CLOSE, self.Close )
 		self.loginBtn.Bind( wx.EVT_BUTTON, self.goLogin )
 		self.regBtn.Bind( wx.EVT_BUTTON, self.goReg )
 
@@ -97,6 +99,12 @@ class LoginFrame ( wx.Frame ):
 
 
 	# Virtual event handlers, overide them in your derived class
+	def Open( self, event ):
+		event.Skip()
+
+	def Close( self, event ):
+		event.Skip()
+
 	def goLogin( self, event ):
 		event.Skip()
 
@@ -145,6 +153,7 @@ class MainFrameAdmin ( wx.Frame ):
 		self.Centre( wx.BOTH )
 
 		# Connect Events
+		self.Bind( wx.EVT_CLOSE, self.Close )
 		self.ButtonShow.Bind( wx.EVT_BUTTON, self.ShowSiswaData )
 		self.m_button11.Bind( wx.EVT_BUTTON, self.goLogOut )
 
@@ -153,6 +162,9 @@ class MainFrameAdmin ( wx.Frame ):
 
 
 	# Virtual event handlers, overide them in your derived class
+	def Close( self, event ):
+		event.Skip()
+
 	def ShowSiswaData( self, event ):
 		event.Skip()
 
@@ -167,7 +179,7 @@ class MainFrameAdmin ( wx.Frame ):
 class MainFrameUser ( wx.Frame ):
 
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 500,300 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 520,365 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
 
 		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 
@@ -190,7 +202,7 @@ class MainFrameUser ( wx.Frame ):
 
 		fgSizer2.Add( ( 0, 0), 1, wx.EXPAND, 5 )
 
-		self.m_staticText102 = wx.StaticText( self, wx.ID_ANY, u" ", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText102 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText102.Wrap( -1 )
 
 		fgSizer2.Add( self.m_staticText102, 0, wx.ALL, 5 )
@@ -295,12 +307,24 @@ class MainFrameUser ( wx.Frame ):
 		self.m_button38 = wx.Button( self, wx.ID_ANY, u"Tampilkan Data Saya", wx.DefaultPosition, wx.Size( -1,30 ), 0 )
 		fgSizer12.Add( self.m_button38, 0, wx.ALL, 5 )
 
-		self.m_staticText104 = wx.StaticText( self, wx.ID_ANY, u"  ", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText103 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText103.Wrap( -1 )
+
+		self.m_staticText103.SetMaxSize( wx.Size( -1,5 ) )
+
+		fgSizer12.Add( self.m_staticText103, 0, wx.ALL, 5 )
+
+		self.m_staticText104 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText104.Wrap( -1 )
 
 		self.m_staticText104.SetMaxSize( wx.Size( -1,5 ) )
 
 		fgSizer12.Add( self.m_staticText104, 0, wx.ALL, 5 )
+
+		self.m_staticText85 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText85.Wrap( -1 )
+
+		fgSizer12.Add( self.m_staticText85, 0, wx.ALL, 5 )
 
 		self.AsalSekolah = wx.StaticText( self, wx.ID_ANY, u"Asal Sekolah : ", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.AsalSekolah.Wrap( -1 )
@@ -393,6 +417,7 @@ class MainFrameUser ( wx.Frame ):
 
 		# Connect Events
 		self.Bind( wx.EVT_ACTIVATE, self.goShowUser )
+		self.Bind( wx.EVT_CLOSE, self.Close )
 		self.m_button38.Bind( wx.EVT_BUTTON, self.goShowUser )
 
 	def __del__( self ):
@@ -401,6 +426,9 @@ class MainFrameUser ( wx.Frame ):
 
 	# Virtual event handlers, overide them in your derived class
 	def goShowUser( self, event ):
+		event.Skip()
+
+	def Close( self, event ):
 		event.Skip()
 
 
@@ -443,7 +471,7 @@ class ShowData ( wx.Frame ):
 		self.grid = wx.grid.Grid( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
 
 		# Grid
-		self.grid.CreateGrid( 6, 21 )
+		self.grid.CreateGrid( 1, 21 )
 		self.grid.EnableEditing( False )
 		self.grid.EnableGridLines( True )
 		self.grid.EnableDragGridSize( False )
@@ -477,11 +505,12 @@ class ShowData ( wx.Frame ):
 		self.Centre( wx.BOTH )
 
 		# Connect Events
-		self.Bind( wx.EVT_ACTIVATE, self.goShow )
+		self.Bind( wx.EVT_ACTIVATE, self.ShowData )
+		self.Bind( wx.EVT_CLOSE, self.Close )
 		self.ButtonTambahData.Bind( wx.EVT_BUTTON, self.TambahData )
 		self.m_button6.Bind( wx.EVT_BUTTON, self.EditData )
 		self.m_button5.Bind( wx.EVT_BUTTON, self.HapusData )
-		self.m_button37.Bind( wx.EVT_BUTTON, self.goShow )
+		self.m_button37.Bind( wx.EVT_BUTTON, self.Refresh )
 		self.m_button43.Bind( wx.EVT_BUTTON, self.Cancel )
 
 	def __del__( self ):
@@ -489,7 +518,10 @@ class ShowData ( wx.Frame ):
 
 
 	# Virtual event handlers, overide them in your derived class
-	def goShow( self, event ):
+	def ShowData( self, event ):
+		event.Skip()
+
+	def Close( self, event ):
 		event.Skip()
 
 	def TambahData( self, event ):
@@ -501,6 +533,8 @@ class ShowData ( wx.Frame ):
 	def HapusData( self, event ):
 		event.Skip()
 
+	def Refresh( self, event ):
+		event.Skip()
 
 	def Cancel( self, event ):
 		event.Skip()
@@ -745,7 +779,8 @@ class EditData ( wx.Frame ):
 		self.Centre( wx.BOTH )
 
 		# Connect Events
-		self.Bind( wx.EVT_ACTIVATE, self.goEdit )
+		self.Bind( wx.EVT_ACTIVATE, self.Open )
+		self.Bind( wx.EVT_CLOSE, self.Close )
 		self.m_button36.Bind( wx.EVT_BUTTON, self.idSearch )
 		self.m_button42.Bind( wx.EVT_BUTTON, self.Submit )
 		self.m_button43.Bind( wx.EVT_BUTTON, self.Cancel )
@@ -755,7 +790,10 @@ class EditData ( wx.Frame ):
 
 
 	# Virtual event handlers, overide them in your derived class
-	def goEdit( self, event ):
+	def Open( self, event ):
+		event.Skip()
+
+	def Close( self, event ):
 		event.Skip()
 
 	def idSearch( self, event ):
@@ -1178,6 +1216,8 @@ class TambahData ( wx.Frame ):
 		self.Centre( wx.BOTH )
 
 		# Connect Events
+		self.Bind( wx.EVT_ACTIVATE, self.Open )
+		self.Bind( wx.EVT_CLOSE, self.Close )
 		self.m_button42.Bind( wx.EVT_BUTTON, self.Submit )
 		self.m_button43.Bind( wx.EVT_BUTTON, self.Cancel )
 
@@ -1186,6 +1226,12 @@ class TambahData ( wx.Frame ):
 
 
 	# Virtual event handlers, overide them in your derived class
+	def Open( self, event ):
+		event.Skip()
+
+	def Close( self, event ):
+		event.Skip()
+
 	def Submit( self, event ):
 		event.Skip()
 
@@ -1194,10 +1240,10 @@ class TambahData ( wx.Frame ):
 
 
 ###########################################################################
-## Class EditUsername
+## Class TempEditUsername
 ###########################################################################
 
-class EditUsername ( wx.Frame ):
+class TempEditUsername ( wx.Frame ):
 
 	def __init__( self, parent ):
 		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 500,300 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
@@ -1273,10 +1319,10 @@ class EditUsername ( wx.Frame ):
 
 
 ###########################################################################
-## Class EditPassword
+## Class TempEditPassword
 ###########################################################################
 
-class EditPassword ( wx.Frame ):
+class TempEditPassword ( wx.Frame ):
 
 	def __init__( self, parent ):
 		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 500,300 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
@@ -1358,7 +1404,7 @@ class EditPassword ( wx.Frame ):
 class DeleteData ( wx.Frame ):
 
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 835,300 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 835,414 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
 
 		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 
@@ -1369,7 +1415,7 @@ class DeleteData ( wx.Frame ):
 		self.grid = wx.grid.Grid( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
 
 		# Grid
-		self.grid.CreateGrid( 6, 21 )
+		self.grid.CreateGrid( 1, 21 )
 		self.grid.EnableEditing( False )
 		self.grid.EnableGridLines( True )
 		self.grid.EnableDragGridSize( False )
@@ -1404,6 +1450,14 @@ class DeleteData ( wx.Frame ):
 		fgSizer20.SetFlexibleDirection( wx.BOTH )
 		fgSizer20.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
 
+		self.m_button39 = wx.Button( self, wx.ID_ANY, u"Refresh", wx.DefaultPosition, wx.Size( -1,30 ), 0 )
+		fgSizer20.Add( self.m_button39, 0, wx.ALL, 5 )
+
+		self.m_staticText105 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText105.Wrap( -1 )
+
+		fgSizer20.Add( self.m_staticText105, 0, wx.ALL, 5 )
+
 		self.m_staticText178 = wx.StaticText( self, wx.ID_ANY, u"ID User", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText178.Wrap( -1 )
 
@@ -1412,10 +1466,10 @@ class DeleteData ( wx.Frame ):
 		self.BoxHapus = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
 		fgSizer20.Add( self.BoxHapus, 0, wx.ALL, 5 )
 
-		self.m_button45 = wx.Button( self, wx.ID_ANY, u"Hapus", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_button45 = wx.Button( self, wx.ID_ANY, u"Hapus", wx.DefaultPosition, wx.Size( -1,30 ), 0 )
 		fgSizer20.Add( self.m_button45, 0, wx.ALL, 5 )
 
-		self.m_button46 = wx.Button( self, wx.ID_ANY, u"Cancel", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_button46 = wx.Button( self, wx.ID_ANY, u"Cancel", wx.DefaultPosition, wx.Size( -1,30 ), 0 )
 		fgSizer20.Add( self.m_button46, 0, wx.ALL, 5 )
 
 
@@ -1428,6 +1482,9 @@ class DeleteData ( wx.Frame ):
 		self.Centre( wx.BOTH )
 
 		# Connect Events
+		self.Bind( wx.EVT_ACTIVATE, self.ShowData )
+		self.Bind( wx.EVT_CLOSE, self.Close )
+		self.m_button39.Bind( wx.EVT_BUTTON, self.Refresh )
 		self.m_button45.Bind( wx.EVT_BUTTON, self.HapusData )
 		self.m_button46.Bind( wx.EVT_BUTTON, self.Cancel )
 
@@ -1436,6 +1493,15 @@ class DeleteData ( wx.Frame ):
 
 
 	# Virtual event handlers, overide them in your derived class
+	def ShowData( self, event ):
+		event.Skip()
+
+	def Close( self, event ):
+		event.Skip()
+
+	def Refresh( self, event ):
+		event.Skip()
+
 	def HapusData( self, event ):
 		event.Skip()
 
