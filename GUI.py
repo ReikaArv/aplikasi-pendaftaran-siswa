@@ -19,7 +19,7 @@ import wx.adv
 class LoginFrame ( wx.Frame ):
 
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 400,250 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 500,300 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
 
 		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 
@@ -68,13 +68,13 @@ class LoginFrame ( wx.Frame ):
 
 		fgSizer1.Add( ( 0, 0), 1, wx.EXPAND, 5 )
 
-		gSizer3 = wx.GridSizer( 0, 3, 0, 0 )
+		gSizer3 = wx.GridSizer( 0, 2, 0, 0 )
 
 		self.loginBtn = wx.Button( self, wx.ID_ANY, u"Login", wx.DefaultPosition, wx.Size( -1,30 ), 0 )
 		gSizer3.Add( self.loginBtn, 0, wx.ALL, 5 )
 
-
-		gSizer3.Add( ( 0, 0), 1, wx.EXPAND, 5 )
+		self.regBtn = wx.Button( self, wx.ID_ANY, u"Register", wx.DefaultPosition, wx.Size( -1,30 ), 0 )
+		gSizer3.Add( self.regBtn, 0, wx.ALL, 5 )
 
 
 		fgSizer1.Add( gSizer3, 1, wx.EXPAND, 5 )
@@ -92,6 +92,7 @@ class LoginFrame ( wx.Frame ):
 		self.Bind( wx.EVT_ACTIVATE, self.Open )
 		self.Bind( wx.EVT_CLOSE, self.Close )
 		self.loginBtn.Bind( wx.EVT_BUTTON, self.goLogin )
+		self.regBtn.Bind( wx.EVT_BUTTON, self.goReg )
 
 	def __del__( self ):
 		pass
@@ -105,6 +106,9 @@ class LoginFrame ( wx.Frame ):
 		event.Skip()
 
 	def goLogin( self, event ):
+		event.Skip()
+
+	def goReg( self, event ):
 		event.Skip()
 
 
@@ -175,7 +179,7 @@ class MainFrameAdmin ( wx.Frame ):
 class MainFrameUser ( wx.Frame ):
 
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 560,365 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 520,365 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
 
 		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 
@@ -464,10 +468,10 @@ class ShowData ( wx.Frame ):
 
 		bSizer5 = wx.BoxSizer( wx.VERTICAL )
 
-		self.grid = wx.grid.Grid( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.grid = wx.grid.Grid( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( -1,120 ), 0 )
 
 		# Grid
-		self.grid.CreateGrid( 1, 21 )
+		self.grid.CreateGrid( 1, 20 )
 		self.grid.EnableEditing( False )
 		self.grid.EnableGridLines( True )
 		self.grid.EnableDragGridSize( False )
@@ -480,7 +484,6 @@ class ShowData ( wx.Frame ):
 		self.grid.SetColLabelAlignment( wx.ALIGN_CENTER, wx.ALIGN_CENTER )
 
 		# Rows
-		self.grid.AutoSizeRows()
 		self.grid.EnableDragRowSize( True )
 		self.grid.SetRowLabelSize( 80 )
 		self.grid.SetRowLabelAlignment( wx.ALIGN_CENTER, wx.ALIGN_CENTER )
