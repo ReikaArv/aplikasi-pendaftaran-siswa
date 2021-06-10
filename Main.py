@@ -5,7 +5,7 @@ import GUI
 import sqlite3
 
 # dbconn = sqlite3.connect("E:/data kuliah/semester 4/PBO 2/project/coding/db_test.db")
-conn= sqlite3.connect("E:/data kuliah/semester 4/PBO 2/Project/coding/database.db")
+conn= sqlite3.connect("E:/Kuliah/Semester 4/PBO/ProjectPBO/database.db")
 app = wx.App()
 
 uname_cache = 0
@@ -90,11 +90,11 @@ class MainFrameUser(GUI.MainFrameUser):
             NoHP = self.PlaceHolderNOHP.SetLabel(row[9])
             Alamat = self.PlaceHolderAlamat.SetLabel(row[10])
             NilaiUN = self.PlaceHolderNilaiUN.SetLabel(str(row[11]))
-            AsalSekolah = self.AsalSekolah.SetLabel(row[12])
+            AsalSekolah = self.PlaceHolderAsalSekolah.SetLabel(row[12])
             Jurusan = self.PlaceHolderJurusan.SetLabel(row[13])
             NamaAyah = self.PlaceHoldeNamaAyah.SetLabel(row[14])
             NamaIbu= self.PlaceHolderNamaIbu.SetLabel(row[15])
-            JumlahSaudara = self.JumlahSaudara.SetLabel(str(row[16]))
+            JumlahSaudara = self.PlaceHolderJumlahSaudara.SetLabel(str(row[16]))
             PekerjaanAyah = self.PlaceHolderPekerjaanAyah.SetLabel(row[17])
             PekerjaanIbu = self.PlaceHolderPekerjaanIbu.SetLabel(row[18])
             Status = self.PlaceHolderStatus.SetLabel(row[19])
@@ -212,12 +212,17 @@ class AddDataFrame(GUI.TambahData):
 
         addQuery = f'INSERT INTO User (Username, Password, NamaLengkap, TanggalLahir, Gender, Tinggi, Berat, NIK, NoHP, Alamat, NilaiUN, AsalSekolah, Jurusan, NamaAyah, NamaIbu, JmlSaudara, PekerjaanAyah, PekerjaanIbu, Status) VALUES ("{Username}", "{Password}", "{Nama}", "{TanggalLahir}", "{JenisKelamin}", "{TinggiBadan}", "{BeratBadan}", "{nik}", "{NoHP}", "{Alamat}", "{NilaiUN}", "{AsalSekolah}", "{Jurusan}", "{NamaAyah}", "{NamaIbu}", "{JumlahSaudara}", "{PekerjaanAyah}", "{PekerjaanIbu}", "{Status}")'
 
-        conn.execute(addQuery)
-        conn.commit()
+        try: 
+            conn.execute(addQuery)
+            conn.commit()
+            wx.MessageBox('Data Telah Ditambahkan')
+            FrameAddData.Hide()
+            FrameShowData.Show()
 
-        wx.MessageBox('Data Telah Ditambahkan')
-        FrameAddData.Hide()
-        FrameShowData.Show()
+        except sqlite3.Error:
+            wx.MessageBox('Data Gagal Ditambahkan')
+        
+        
 
     def Cancel(self, event):
         FrameShowData.Show()
@@ -245,27 +250,7 @@ class EditDataFrame(GUI.EditData):
     def __init__(self, parent):
         super().__init__(parent)
     
-    def Submit(self, event):
-       Username = self.BoxUsernameEdit.GetValue()
-       Password = self.BoxPasswordEdit.GetValue()
-       Nama = self.BoxNamaEdit.GetValue()
-       TanggalLahir= self.BoxTanggalLahirEdit.GetValue()
-       JenisKelamin = self.GenderEdit.GetStringSelection()
-       TinggiBadan = self.BoxTinggiBadanEdit.GetValue()
-       BeratBadan = self.BoxBeratBadanEdit.GetValue()
-       nik = self.BoxNIKEdit.GetValue()
-       NoHP = self.BoxNomorHpEdit.GetValue()
-       Alamat = self.BoxAlamatEdit.GetValue()
-       NilaiUN = self.BoxNilaiUNEdit.GetValue()
-       AsalSekolah = self.AsalSekolahEdit.GetStringSelection()
-       Jurusan = self.JurusanEdit.GetStringSelection()
-       NamaAyah = self.BoxNamaAyahEdit.GetValue()
-       NamaIbu= self.BoxNamaIbuEdit.GetValue()
-       JumlahSaudara = self.BoxJumlahSaudaraEdit.GetValue()
-       PekerjaanAyah = self.PekerjaanAyahEdit.GetStringSelection()
-       PekerjaanIbu = self.PekerjaanIbuEdit.GetStringSelection()
-       Status = self.StatusEdit.GetStringSelection()
-
+    
     def Cancel(self, event):
         FrameShowData.Show()
         FrameEditData.Hide()
@@ -291,6 +276,7 @@ class EditDataFrame(GUI.EditData):
         cur = conn.cursor()
         cur.execute(searchQuery)
         data = (cur.fetchall())
+        print(data)
         for row in data:
             Username = self.BoxUsernameEdit.SetValue(row[1])
             Password = self.BoxPasswordEdit.SetValue(row[2])
@@ -312,8 +298,40 @@ class EditDataFrame(GUI.EditData):
             PekerjaanIbu = self.PekerjaanIbuEdit.SetStringSelection(row[18])
             Status = self.StatusEdit.SetStringSelection(row[19])
         
+    def Submit(self, event):
+        Username = str(self.BoxUsernameEdit.GetValue())
+        Password = str(self.BoxPasswordEdit.GetValue())
+        Nama = str(self.BoxNamaEdit.GetValue())
+        # TanggalLahir= self.BoxTanggalLahirEdit.GetValue()
+        JenisKelamin = str(self.GenderEdit.GetStringSelection())
+        TinggiBadan = str(self.BoxTinggiBadanEdit.GetValue())
+        BeratBadan = str(self.BoxBeratBadanEdit.GetValue())
+        nik = str(self.BoxNIKEdit.GetValue())
+        NoHP = str(self.BoxNomorHpEdit.GetValue())
+        Alamat = str(self.BoxAlamatEdit.GetValue())
+        NilaiUN = str(self.BoxNilaiUNEdit.GetValue())
+        AsalSekolah = str(self.AsalSekolahEdit.GetStringSelection())
+        Jurusan = str(self.JurusanEdit.GetStringSelection())
+        NamaAyah = str(self.BoxNamaAyahEdit.GetValue())
+        NamaIbu= str(self.BoxNamaIbuEdit.GetValue())
+        JumlahSaudara = str(self.BoxJumlahSaudaraEdit.GetValue())
+        PekerjaanAyah = str(self.PekerjaanAyahEdit.GetStringSelection())
+        PekerjaanIbu = str(self.PekerjaanIbuEdit.GetStringSelection())
+        Status = str(self.StatusEdit.GetStringSelection())
+        idUser = str(self.BoxIDUser.GetValue())
+        print(idUser)
 
-
+        editQuery = f'UPDATE User SET Password = "{Password}", NamaLengkap = "{Nama}", Gender = "{JenisKelamin}", Tinggi = "{TinggiBadan}", Berat = "{BeratBadan}", NIK = "{nik}", NoHP = "{NoHP}", Alamat = "{Alamat}", NilaiUN = "{NilaiUN}", AsalSekolah = "{AsalSekolah}", Jurusan = "{Jurusan}", NamaAyah = "{NamaAyah}", NamaIbu = "{NamaIbu}", JmlSaudara = "{JumlahSaudara}", PekerjaanAyah = "{PekerjaanAyah}", PekerjaanIbu = "{PekerjaanIbu}", Status = "{Status}" WHERE userId = "{idUser}"' 
+        
+        try:
+            conn.execute(editQuery)
+            conn.commit()
+            wx.MessageBox('Data Berhasil Diubah')
+            FrameEditData.Hide()
+            FrameShowData.Show()
+        except sqlite3.Error:
+            wx.MessageBox('Data Gagal Diubah')
+   
         def Close(self, force):
            app.ExitMainLoop()
     
@@ -400,7 +418,7 @@ class DeleteDataFrame(GUI.DeleteData):
         app.ExitMainLoop()
 
 
-     
+    
 
 #daftar Frame
 FrameLogin = LoginFrame(None)
